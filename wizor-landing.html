@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="page_title">Wizor Energy— El Estándar Incorruptible de Auditoría Energética</title>
+<link rel="icon" type="image/png" href="scr/logo-wizor-navy.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050810; --bg2:#0a0f1e; --panel:#0d1426; --line:rgba(120,160,255,.12);
+    --txt:#e8edf7; --dim:#8b96ad; --cyan:#38e1ff; --violet:#7c6cff; --green:#3dffa8;
+    --amber:#ffc857; --red:#ff5d73;
+    --grad:linear-gradient(135deg,#38e1ff 0%,#7c6cff 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;line-height:1.6;overflow-x:hidden}
+  ::selection{background:rgba(56,225,255,.3)}
+  h1,h2,.logo{font-family:'Space Grotesk','Segoe UI',sans-serif}
+
+  /* NAV */
+  nav{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;
+      padding:16px 48px;background:rgba(5,8,16,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+      transition:background .3s ease,box-shadow .3s ease,padding .3s ease}
+  nav.scrolled{background:rgba(5,8,16,.94);box-shadow:0 8px 30px rgba(0,0,0,.35);padding:12px 48px}
+  .logo{height:40px;width:auto;display:block}
+  .footer-logo{height:26px;width:auto;display:block;opacity:.9}
+  .nav-right{display:flex;align-items:center;gap:22px}
+  .lang-switch{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.5px}
+  .lang-switch button{background:none;border:none;color:var(--dim);cursor:pointer;padding:4px 4px;font:inherit;letter-spacing:inherit;transition:color .2s}
+  .lang-switch button.active{color:var(--cyan)}
+  .lang-switch button:hover{color:var(--txt)}
+  .lang-switch span{color:var(--line)}
+
+  /* Reveal-on-scroll: hidden state is pure structural CSS (matches from
+     first paint, no JS needed) so there is never a flash of shown-then-
+     hidden content. JS only ever adds .in (start) / .done (release). */
+  :is(#problema h2,#problema .lead,#problema .prob,#solucion h2,#solucion .lead,#solucion .sp,#solucion .cert-visual,#metodologia h2,#metodologia .lead,#metodologia .moat,#metodologia .closing-line,#seguridad h2,#seguridad .lead,#seguridad .moat,#seguridad .closing-line,#capas h2,#capas .lead,#capas .radar,#indices h2,#indices .lead,#indices .idx,#verticales h2,#verticales .lead,#verticales .vert,#moats h2,#moats .moat-photo-wrap,#moats .moat,#inevitable h2,#inevitable .lead,#inevitable .force,#inevitable .closing-line,#pricing h2,#pricing .lead,#pricing .price,#roadmap h2,#roadmap .rd,.img-band .cap,#contacto .inner){opacity:0;transform:translateY(18px)}
+  @keyframes revealUp{to{opacity:1;transform:translateY(0)}}
+  :is(#problema h2,#problema .lead,#problema .prob,#solucion h2,#solucion .lead,#solucion .sp,#solucion .cert-visual,#metodologia h2,#metodologia .lead,#metodologia .moat,#metodologia .closing-line,#seguridad h2,#seguridad .lead,#seguridad .moat,#seguridad .closing-line,#capas h2,#capas .lead,#capas .radar,#indices h2,#indices .lead,#indices .idx,#verticales h2,#verticales .lead,#verticales .vert,#moats h2,#moats .moat-photo-wrap,#moats .moat,#inevitable h2,#inevitable .lead,#inevitable .force,#inevitable .closing-line,#pricing h2,#pricing .lead,#pricing .price,#roadmap h2,#roadmap .rd,.img-band .cap,#contacto .inner).in:not(.done){
+    animation-name:revealUp;
+    animation-duration:.7s;
+    animation-timing-function:cubic-bezier(.16,1,.3,1);
+    animation-fill-mode:forwards;
+  }
+  :is(#problema h2,#problema .lead,#problema .prob,#solucion h2,#solucion .lead,#solucion .sp,#solucion .cert-visual,#metodologia h2,#metodologia .lead,#metodologia .moat,#metodologia .closing-line,#seguridad h2,#seguridad .lead,#seguridad .moat,#seguridad .closing-line,#capas h2,#capas .lead,#capas .radar,#indices h2,#indices .lead,#indices .idx,#verticales h2,#verticales .lead,#verticales .vert,#moats h2,#moats .moat-photo-wrap,#moats .moat,#inevitable h2,#inevitable .lead,#inevitable .force,#inevitable .closing-line,#pricing h2,#pricing .lead,#pricing .price,#roadmap h2,#roadmap .rd,.img-band .cap,#contacto .inner).done{opacity:1;transform:none;animation:none}
+  @media(prefers-reduced-motion:reduce){:is(#problema h2,#problema .lead,#problema .prob,#solucion h2,#solucion .lead,#solucion .sp,#solucion .cert-visual,#metodologia h2,#metodologia .lead,#metodologia .moat,#metodologia .closing-line,#seguridad h2,#seguridad .lead,#seguridad .moat,#seguridad .closing-line,#capas h2,#capas .lead,#capas .radar,#indices h2,#indices .lead,#indices .idx,#verticales h2,#verticales .lead,#verticales .vert,#moats h2,#moats .moat-photo-wrap,#moats .moat,#inevitable h2,#inevitable .lead,#inevitable .force,#inevitable .closing-line,#pricing h2,#pricing .lead,#pricing .price,#roadmap h2,#roadmap .rd,.img-band .cap,#contacto .inner){opacity:1;transform:none}}
+  /* stagger: sets ONLY animation-delay, left out of the .in rule above on
+     purpose so there is no shorthand collision to fight for specificity */
+  .prob-grid>.prob:nth-child(1){animation-delay:0s}
+  .prob-grid>.prob:nth-child(2){animation-delay:.07s}
+  .prob-grid>.prob:nth-child(3){animation-delay:.14s}
+  .sol-points>.sp:nth-child(1){animation-delay:0s}
+  .sol-points>.sp:nth-child(2){animation-delay:.05s}
+  .sol-points>.sp:nth-child(3){animation-delay:.1s}
+  .sol-points>.sp:nth-child(4){animation-delay:.15s}
+  .idx-grid>.idx:nth-child(1){animation-delay:0s}
+  .idx-grid>.idx:nth-child(2){animation-delay:.05s}
+  .idx-grid>.idx:nth-child(3){animation-delay:.1s}
+  .idx-grid>.idx:nth-child(4){animation-delay:.15s}
+  .idx-grid>.idx:nth-child(5){animation-delay:.2s}
+  .vert-grid>.vert:nth-child(1){animation-delay:0s}
+  .vert-grid>.vert:nth-child(2){animation-delay:.04s}
+  .vert-grid>.vert:nth-child(3){animation-delay:.08s}
+  .vert-grid>.vert:nth-child(4){animation-delay:.12s}
+  .vert-grid>.vert:nth-child(5){animation-delay:.16s}
+  .vert-grid>.vert:nth-child(6){animation-delay:.2s}
+  .vert-grid>.vert:nth-child(7){animation-delay:.24s}
+  .vert-grid>.vert:nth-child(8){animation-delay:.28s}
+  .moat-grid>.moat:nth-child(1){animation-delay:0s}
+  .moat-grid>.moat:nth-child(2){animation-delay:.06s}
+  .moat-grid>.moat:nth-child(3){animation-delay:.12s}
+  .moat-grid>.moat:nth-child(4){animation-delay:.18s}
+  .force-grid>.force:nth-child(1){animation-delay:0s}
+  .force-grid>.force:nth-child(2){animation-delay:.07s}
+  .force-grid>.force:nth-child(3){animation-delay:.14s}
+  .price-grid>.price:nth-child(1){animation-delay:0s}
+  .price-grid>.price:nth-child(2){animation-delay:.07s}
+  .price-grid>.price:nth-child(3){animation-delay:.14s}
+  .road>.rd:nth-child(1){animation-delay:0s}
+  .road>.rd:nth-child(2){animation-delay:.05s}
+  .road>.rd:nth-child(3){animation-delay:.1s}
+  .road>.rd:nth-child(4){animation-delay:.15s}
+  .road>.rd:nth-child(5){animation-delay:.2s}
+  .road>.rd:nth-child(6){animation-delay:.25s}
+
+  nav ul{display:flex;gap:28px;list-style:none}
+  nav a{color:var(--dim);text-decoration:none;font-size:13.5px;letter-spacing:.4px;transition:color .2s}
+  nav a:hover{color:var(--cyan)}
+  .cta-btn{background:var(--grad);color:#04121a;font-weight:700;padding:9px 20px;border-radius:8px;text-decoration:none;font-size:13.5px;box-shadow:0 0 24px rgba(56,225,255,.35);display:inline-block;transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 0 34px rgba(56,225,255,.5)}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+        position:relative;padding:140px 24px 80px;background:
+        radial-gradient(ellipse 80% 50% at 50% -10%,rgba(124,108,255,.25),transparent),
+        radial-gradient(ellipse 60% 40% at 80% 110%,rgba(56,225,255,.12),transparent)}
+  #stars{position:absolute;inset:0;pointer-events:none;z-index:1}
+  .hero-art{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+  .hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+    radial-gradient(ellipse 70% 55% at 50% 34%,rgba(5,8,16,.82),rgba(5,8,16,.55) 60%,transparent 100%),
+    linear-gradient(180deg,rgba(5,8,16,.72) 0%,rgba(5,8,16,.5) 30%,rgba(5,8,16,.6) 65%,var(--bg) 100%)}
+  .hero-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+  @keyframes heroUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  .hero-content>*{opacity:0;animation:heroUp .9s cubic-bezier(.16,1,.3,1) forwards}
+  .hero-content>.badge{animation-delay:.05s}
+  .hero-content>h1{animation-delay:.16s}
+  .hero-content>.sub{animation-delay:.32s}
+  .hero-content>.trust-strip{animation-delay:.46s}
+  .hero-content>.ticker{animation-delay:.58s}
+  @media(prefers-reduced-motion:reduce){.hero-content>*{animation:none;opacity:1}}
+  .hud-label{font-family:'JetBrains Mono',Consolas,'SF Mono',monospace}
+  @keyframes pulseNode{0%,100%{opacity:.35}50%{opacity:1}}
+  .pulse{animation:pulseNode 2.6s ease-in-out infinite}
+  @keyframes dashFlow{to{stroke-dashoffset:-40}}
+  .flow{stroke-dasharray:6 6;animation:dashFlow 1.6s linear infinite}
+  .badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 18px;font-size:12.5px;color:var(--cyan);
+         letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px;background:rgba(56,225,255,.06)}
+  .hero h1{font-size:clamp(38px,6vw,72px);font-weight:850;line-height:1.08;max-width:1000px;letter-spacing:-1px}
+  .hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{max-width:760px;color:var(--dim);font-size:clamp(16px,2vw,20px);margin:26px auto 40px}
+  .trust-strip{margin-top:24px;font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--dim)}
+  .btn-primary{background:var(--grad);color:#04121a;font-weight:700;padding:15px 34px;border-radius:10px;text-decoration:none;font-size:15.5px;box-shadow:0 0 40px rgba(56,225,255,.4);display:inline-block;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+  .btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 55px rgba(56,225,255,.55)}
+  .btn-primary:active{transform:translateY(0) scale(.98)}
+  .btn-ghost{border:1px solid rgba(120,160,255,.35);color:var(--txt);padding:15px 34px;border-radius:10px;text-decoration:none;font-size:15.5px}
+
+  /* STATS TICKER */
+  .ticker{display:flex;flex-wrap:wrap;justify-content:center;gap:0;margin-top:70px;border:1px solid var(--line);
+          border-radius:16px;background:rgba(13,20,38,.7);backdrop-filter:blur(8px);overflow:hidden}
+  .tick{padding:22px 38px;border-right:1px solid var(--line);min-width:200px}
+  .tick:last-child{border-right:none}
+  .tick .num{font-size:30px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tick .lbl{font-size:12px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+  /* SECTIONS */
+  section{padding:110px 48px;max-width:1280px;margin:0 auto}
+  .kicker{color:var(--cyan);font-size:13px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:14px}
+  h2{font-size:clamp(30px,4vw,46px);font-weight:800;letter-spacing:-.5px;line-height:1.15;max-width:820px}
+  .lead{color:var(--dim);font-size:17.5px;max-width:760px;margin-top:18px}
+
+  /* PROBLEM */
+  .prob-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:56px}
+  .prob{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:32px;position:relative;overflow:hidden}
+  .prob::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--red),transparent)}
+  .prob h3{font-size:19px;margin-bottom:12px}
+  .prob p{color:var(--dim);font-size:14.5px}
+  .prob .pnum{font-size:44px;font-weight:850;color:rgba(255,93,115,.25);position:absolute;top:14px;right:22px}
+
+  /* SOLUTION */
+  .sol-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;margin-top:56px}
+  @media(max-width:900px){.sol-wrap{grid-template-columns:1fr}}
+  .sol-points{display:flex;flex-direction:column;gap:26px}
+  .sp{display:flex;gap:18px}
+  .sp .ic{flex:0 0 46px;height:46px;border-radius:12px;background:rgba(56,225,255,.08);border:1px solid var(--line);
+          display:flex;align-items:center;justify-content:center;font-size:20px}
+  .sp h4{font-size:17px;margin-bottom:4px}
+  .sp p{color:var(--dim);font-size:14.5px}
+  .pipeline-wrap{margin-top:84px;overflow-x:auto}
+  .pipe-cap{text-align:center;color:var(--dim);font-size:12.5px;letter-spacing:1px;text-transform:uppercase;margin-top:8px}
+
+  .radar{display:block;margin:56px auto 0;max-width:600px;width:100%}
+  .radar-sweep{transform-origin:320px 320px;animation:radarspin 6s linear infinite}
+  @keyframes radarspin{to{transform:rotate(360deg)}}
+
+  .moat-photo-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:56px}
+  @media(max-width:900px){.moat-photo-wrap{grid-template-columns:1fr}}
+  .moat-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:20px;border:1px solid var(--line);
+              box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(56,225,255,.15)}
+  .moat-photo-cap{color:var(--txt);font-size:24px;font-weight:600;line-height:1.45;border-left:3px solid var(--cyan);padding-left:24px}
+
+  .stack{max-width:880px;margin:56px auto 0;display:flex;flex-direction:column;align-items:center;gap:9px;position:relative}
+  .stack-row{display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+             padding:13px 22px;transition:transform .2s,border-color .2s}
+  .stack-row:hover{transform:translateY(-3px);border-color:rgba(56,225,255,.4)}
+  .stack-row .n{font-family:'JetBrains Mono',Consolas,monospace;font-size:10.5px;color:var(--cyan);letter-spacing:1px;flex:0 0 50px}
+  .stack-row .txt b{display:block;font-size:14px}
+  .stack-row .txt span{color:var(--dim);font-size:12px}
+  .stack-custom{border-style:dashed;border-color:rgba(124,108,255,.5);background:rgba(124,108,255,.06)}
+  .stack-tag{display:inline-block;margin-left:8px;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+             color:var(--violet);border:1px solid rgba(124,108,255,.5);border-radius:999px;padding:2px 8px;vertical-align:middle}
+  .stack-core{margin-top:10px;background:var(--grad);color:#04121a;border-radius:999px;padding:13px 28px;font-weight:800;
+              font-size:13.5px;letter-spacing:.5px;box-shadow:0 0 40px rgba(56,225,255,.4)}
+
+  .cert-visual{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;
+               box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(124,108,255,.15);border:1px solid var(--line)}
+  .cert-visual img{width:100%;height:100%;object-fit:cover;display:block}
+  .cert-visual .cert-cap{position:absolute;left:0;right:0;bottom:0;padding:26px;background:linear-gradient(180deg,transparent,rgba(5,8,16,.94) 68%)}
+  .cert-visual .cert-cap h4{font-size:18px;margin-bottom:6px;font-family:'Space Grotesk','Segoe UI',sans-serif}
+  .cert-visual .cert-cap p{color:var(--dim);font-size:13px}
+
+  .hero-art{object-fit:cover}
+  .img-band{position:relative;height:56vh;min-height:380px;max-height:560px;overflow:hidden}
+  .img-band img{width:100%;height:100%;object-fit:cover;display:block}
+  .img-band .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,8,16,.05) 0%,rgba(5,8,16,.35) 55%,rgba(5,8,16,.92) 100%)}
+  .img-band .cap{position:absolute;left:48px;right:48px;bottom:34px;max-width:640px}
+  .img-band .cap .kicker{margin-bottom:8px}
+  .img-band .cap h3{font-family:'Space Grotesk','Segoe UI',sans-serif;font-size:clamp(19px,2.4vw,27px);font-weight:700;line-height:1.25}
+  .img-band .cap p{color:var(--dim);font-size:14px;margin-top:8px;max-width:520px}
+
+  .frontier-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:56px}
+  .frontier{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--line)}
+  .frontier img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+  .frontier:hover img{transform:scale(1.06)}
+  .frontier .ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(5,8,16,.92) 100%);display:flex;align-items:flex-end;padding:20px}
+  .frontier .ov span{display:block;font-size:10.5px;color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+  .frontier .ov h4{font-size:16px}
+
+  .console{background:#070c18;border:1px solid var(--line);border-radius:16px;padding:26px;font-family:'JetBrains Mono','Cascadia Code','SF Mono',Consolas,monospace;
+           font-size:13px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(124,108,255,.12)}
+  .console .hdr{display:flex;gap:7px;margin-bottom:18px}
+  .console .dot{width:11px;height:11px;border-radius:50%}
+  .console .ln{margin-bottom:9px;color:var(--dim)}
+  .console .ln b{color:var(--txt);font-weight:600}
+  .ok{color:var(--green)} .warn{color:var(--amber)} .crit{color:var(--red)} .cy{color:var(--cyan)}
+
+  /* LAYERS */
+  .layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:56px}
+  .layer{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 18px;font-size:13.5px;transition:transform .2s,border-color .2s}
+  .layer:hover{transform:translateY(-4px);border-color:rgba(56,225,255,.4)}
+  .layer .n{color:var(--cyan);font-weight:800;font-size:12px;letter-spacing:1px}
+  .layer b{display:block;margin:6px 0 4px;font-size:14.5px}
+  .layer span{color:var(--dim);font-size:12.5px}
+
+  /* INDICES */
+  .idx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:22px;margin-top:56px}
+  .idx{background:linear-gradient(160deg,var(--panel),#0a1020);border:1px solid var(--line);border-radius:16px;padding:28px;position:relative;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
+  .idx:hover{transform:translateY(-6px);border-color:rgba(56,225,255,.4);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .idx .tag{font-size:24px;font-weight:850;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .idx h4{font-size:15px;margin:8px 0 8px}
+  .idx p{color:var(--dim);font-size:13px}
+  .idx .live{position:absolute;top:24px;right:22px;font-size:20px;font-weight:800;font-family:'JetBrains Mono',Consolas,monospace}
+
+  /* MATRIX */
+  .vert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;margin-top:56px}
+  .vert{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+  .vert:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+  .vert-img{position:relative;height:190px;overflow:hidden;background:#0a1020}
+  .vert-img img,.vert-img svg{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+  .vert:hover .vert-img img,.vert:hover .vert-img svg{transform:scale(1.06)}
+  .vert-img .status{position:absolute;top:14px;right:14px}
+  .vert-body{padding:22px 26px 26px}
+  .vert .top{display:flex;align-items:center;margin-bottom:10px}
+  .vert .emoji{font-size:26px}
+  .vert h4{font-size:17px}
+  .status{font-size:10.5px;font-weight:700;letter-spacing:1px;padding:4px 10px;border-radius:999px;text-transform:uppercase}
+  .s-op{background:rgba(13,20,38,.75);color:var(--green);border:1px solid rgba(61,255,168,.4);backdrop-filter:blur(4px)}
+  .s-dep{background:rgba(13,20,38,.75);color:var(--amber);border:1px solid rgba(255,200,87,.4);backdrop-filter:blur(4px)}
+  .vert .metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .vert .m{background:rgba(255,255,255,.03);border-radius:8px;padding:9px 12px}
+  .vert .m .k{font-size:10.5px;color:var(--dim);letter-spacing:.5px;text-transform:uppercase}
+  .vert .m .v{font-size:15px;font-weight:700;font-family:'JetBrains Mono',Consolas,monospace}
+  .vert p.par{color:var(--dim);font-size:12.5px;margin-top:12px}
+
+  /* MOATS */
+  .moat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-top:56px}
+  .moat{border:1px solid var(--line);border-radius:16px;padding:30px;background:var(--panel);transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
+  .moat:hover{transform:translateY(-6px);border-color:rgba(56,225,255,.35);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .moat .ic{font-size:26px;margin-bottom:14px}
+  .moat h4{font-size:16.5px;margin-bottom:8px}
+  .moat p{color:var(--dim);font-size:13.5px}
+
+  /* INEVITABLE */
+  .force-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:56px}
+  .force{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
+  .force:hover{transform:translateY(-6px);border-color:rgba(124,108,255,.5);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .force::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--violet),transparent)}
+  .force h4{font-size:17.5px;margin:14px 0 10px}
+  .force p{color:var(--dim);font-size:14.5px}
+  .closing-line{margin-top:48px;font-size:19px;font-weight:600;max-width:760px;line-height:1.55;border-left:3px solid var(--cyan);padding-left:22px}
+
+  /* PRICING */
+  .price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:56px}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:36px;position:relative;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+  .price:hover{transform:translateY(-6px);box-shadow:0 20px 46px rgba(0,0,0,.4)}
+  .price.feat:hover{box-shadow:0 20px 70px rgba(124,108,255,.3)}
+  .price.feat{border-color:rgba(124,108,255,.6);box-shadow:0 0 60px rgba(124,108,255,.18)}
+  .price .pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--grad);color:#04121a;
+              font-size:11px;font-weight:800;letter-spacing:1px;padding:5px 16px;border-radius:999px;text-transform:uppercase}
+  .price h4{font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan)}
+  .price .amt{font-size:38px;font-weight:850;margin:14px 0 4px}
+  .price .amt small{font-size:14px;color:var(--dim);font-weight:400}
+  .price ul{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:11px}
+  .price li{font-size:13.5px;color:var(--dim);padding-left:24px;position:relative}
+  .price li::before{content:'✦';position:absolute;left:0;color:var(--cyan);font-size:11px}
+
+  /* ROADMAP */
+  .road{margin-top:64px;position:relative;padding-left:34px}
+  .road::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--cyan),var(--violet),transparent)}
+  .rd{position:relative;margin-bottom:44px}
+  .rd::before{content:'';position:absolute;left:-32px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--cyan);animation:pulseNode 2.6s ease-in-out infinite}
+  .rd .yr{font-family:Consolas,monospace;color:var(--cyan);font-weight:700;font-size:14px;letter-spacing:1px}
+  .rd h4{font-size:18px;margin:4px 0 6px}
+  .rd p{color:var(--dim);font-size:14px;max-width:680px}
+
+  /* FOOTER CTA */
+  .final{padding:130px 24px;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(124,108,255,.2),transparent)}
+  .cta-art{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.5;pointer-events:none}
+  .final .inner{position:relative;z-index:1}
+  .final h2{margin:0 auto 20px}
+  footer{border-top:1px solid var(--line);padding:36px 48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;color:var(--dim);font-size:13px}
+  @media(max-width:820px){nav ul{display:none};section{padding:80px 22px}}
+
+  .icon-badge{color:var(--cyan);display:inline-flex}
+  .sp .icon-badge{color:var(--cyan)}
+  .vert .icon-badge{color:var(--cyan)}
+  .layer .icon-badge{color:var(--cyan);margin-bottom:10px;display:block}
+  .moat .icon-badge{color:var(--cyan);display:block;margin-bottom:14px}
+</style>
+</head>
+<body id="top">
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="icon-wind" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="24" y1="40" x2="24" y2="16"/><circle cx="24" cy="16" r="2" fill="currentColor" stroke="none"/><line x1="24" y1="16" x2="24" y2="6"/><line x1="24" y1="16" x2="32" y2="21"/><line x1="24" y1="16" x2="17" y2="22"/><path d="M9,42 q6,-4 12,0 q6,-4 12,0 q6,-4 12,0"/></symbol>
+<symbol id="icon-hydrogen" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="15" y="20" width="18" height="16" rx="3"/><line x1="24" y1="20" x2="24" y2="36"/><circle cx="19" cy="14" r="1.6" fill="currentColor" stroke="none"/><circle cx="24" cy="9.5" r="1.6" fill="currentColor" stroke="none"/><circle cx="29" cy="14" r="1.6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="icon-fission" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="2.2" fill="currentColor" stroke="none"/><ellipse cx="24" cy="24" rx="16" ry="6.5"/><ellipse cx="24" cy="24" rx="16" ry="6.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="16" ry="6.5" transform="rotate(120 24 24)"/></symbol>
+<symbol id="icon-solar" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="8"/><line x1="36" y1="24" x2="41" y2="24"/><line x1="32" y1="32" x2="36" y2="36"/><line x1="24" y1="36" x2="24" y2="41"/><line x1="16" y1="32" x2="12" y2="36"/><line x1="12" y1="24" x2="7" y2="24"/><line x1="16" y1="16" x2="12" y2="12"/><line x1="24" y1="12" x2="24" y2="7"/><line x1="32" y1="16" x2="36" y2="12"/></symbol>
+<symbol id="icon-hydro" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14,40 L14,16 L34,16 L34,40"/><path d="M8,42 q6,-4 12,0 q6,-4 12,0 q6,-4 12,0"/></symbol>
+<symbol id="icon-gas" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24,8 C17,18 16,26 22,33 C20,27 24,25 23,30 C23,35 30,34 29,27 C33,22 30,16 24,8 Z"/><line x1="38" y1="18" x2="38" y2="29"/><path d="M34,25 L38,29 L42,25"/></symbol>
+<symbol id="icon-fusion" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="27" rx="17" ry="7"/><ellipse cx="24" cy="27" rx="9" ry="3.5"/><line x1="24" y1="12" x2="24" y2="18"/><circle cx="24" cy="9" r="1.8" fill="currentColor" stroke="none"/></symbol>
+<symbol id="icon-sbsp" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="20" width="8" height="8" rx="1.5"/><rect x="5" y="21.7" width="13" height="4.6"/><rect x="30" y="21.7" width="13" height="4.6"/><line x1="24" y1="20" x2="24" y2="13"/><circle cx="24" cy="11.5" r="1.6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="icon-scada" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10,32 A14,14 0 0,1 38,32"/><line x1="24" y1="32" x2="31" y2="21"/><circle cx="24" cy="32" r="2.2" fill="currentColor" stroke="none"/><line x1="10" y1="37" x2="38" y2="37"/></symbol>
+<symbol id="icon-weather" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15,33 h17 a6,6 0 0,0 0,-12 a8,8 0 0,0 -15,-2 a6,6 0 0,0 -2,14z"/><line x1="18" y1="38" x2="16" y2="42"/><line x1="26" y1="38" x2="24" y2="42"/></symbol>
+<symbol id="icon-oem" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14,7 h14 l6,6 v28 h-20 z"/><path d="M28,7 v6 h6"/><line x1="18" y1="24" x2="30" y2="24"/><line x1="18" y1="29" x2="30" y2="29"/><line x1="18" y1="34" x2="26" y2="34"/></symbol>
+<symbol id="icon-grid" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6,26 h6 l4,-11 l6,20 l6,-16 l4,7 h10"/></symbol>
+<symbol id="icon-terrain" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6,32 l9,-10 l6,7 l9,-11 l12,14"/><line x1="6" y1="38" x2="42" y2="38"/></symbol>
+<symbol id="icon-financial" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8,34 l8,-8 l6,6 l14,-16"/><path d="M28,16 h8 v8"/><line x1="8" y1="40" x2="40" y2="40"/></symbol>
+<symbol id="icon-cmms" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="5.2"/><circle cx="34" cy="34" r="5.2"/><line x1="17.7" y1="17.7" x2="30.3" y2="30.3" stroke-width="4"/></symbol>
+<symbol id="icon-cyber" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24,7 L38,12 V24 C38,33 32,39 24,42 C16,39 10,33 10,24 V12 Z"/><circle cx="24" cy="23" r="3"/><line x1="24" y1="26" x2="24" y2="31"/></symbol>
+<symbol id="icon-smartcontract" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24,8 L37,16 V32 L24,40 L11,32 V16 Z"/><path d="M18,24 L22,29 L31,18"/></symbol>
+<symbol id="icon-certificate" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="19" r="12"/><circle cx="24" cy="19" r="8"/><path d="M18,29 L15,42 L24,37 L33,42 L30,29"/><path d="M19,19 L23,23 L29,14"/></symbol>
+<symbol id="icon-shield" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24,6 L39,12 V23 C39,33 32,40 24,43 C16,40 9,33 9,23 V12 Z"/><line x1="16" y1="19" x2="32" y2="19"/><line x1="24" y1="19" x2="24" y2="13"/><path d="M16,19 l-4,7 h8z"/><path d="M32,19 l-4,7 h8z"/></symbol>
+<symbol id="icon-network" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="3" fill="currentColor" stroke="none"/><circle cx="24" cy="9" r="2.4"/><circle cx="37" cy="17" r="2.4"/><circle cx="37" cy="31" r="2.4"/><circle cx="24" cy="39" r="2.4"/><circle cx="11" cy="31" r="2.4"/><circle cx="11" cy="17" r="2.4"/><line x1="24" y1="24" x2="24" y2="9"/><line x1="24" y1="24" x2="37" y2="17"/><line x1="24" y1="24" x2="37" y2="31"/><line x1="24" y1="24" x2="24" y2="39"/><line x1="24" y1="24" x2="11" y2="31"/><line x1="24" y1="24" x2="11" y2="17"/></symbol>
+<symbol id="icon-radar" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="8"/><circle cx="24" cy="24" r="3" fill="currentColor" stroke="none"/><line x1="24" y1="24" x2="24" y2="8"/><path d="M12,24 A12,12 0 0,1 24,12" opacity=".55"/><circle cx="33" cy="15" r="1.8" fill="currentColor" stroke="none"/></symbol>
+<symbol id="icon-lock" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="13" y="22" width="22" height="18" rx="3"/><path d="M17,22 v-6 a7,7 0 0,1 14,0 v6"/><circle cx="24" cy="30" r="2.2" fill="currentColor" stroke="none"/><line x1="24" y1="32" x2="24" y2="36"/></symbol>
+<symbol id="icon-engine" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24,8 L37,16 V32 L24,40 L11,32 V16 Z"/><circle cx="24" cy="24" r="2.2" fill="currentColor" stroke="none"/><circle cx="18" cy="19" r="1.7" fill="currentColor" stroke="none"/><circle cx="30" cy="19" r="1.7" fill="currentColor" stroke="none"/><circle cx="18" cy="29" r="1.7" fill="currentColor" stroke="none"/><circle cx="30" cy="29" r="1.7" fill="currentColor" stroke="none"/><line x1="24" y1="24" x2="18" y2="19"/><line x1="24" y1="24" x2="30" y2="19"/><line x1="24" y1="24" x2="18" y2="29"/><line x1="24" y1="24" x2="30" y2="29"/></symbol>
+<symbol id="icon-index" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10,32 A14,14 0 0,1 38,32"/><line x1="10" y1="32" x2="12.7" y2="32"/><line x1="14.9" y1="21.4" x2="16.8" y2="23"/><line x1="24" y1="18" x2="24" y2="20.7"/><line x1="33.1" y1="21.4" x2="31.2" y2="23"/><line x1="38" y1="32" x2="35.3" y2="32"/><line x1="24" y1="32" x2="30.5" y2="23.5"/><circle cx="24" cy="32" r="2.2" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<nav>
+  <a href="#top"><img class="logo" src="scr/logo-wizor-onDark.png" alt="Wizor Energy"></a>
+  <ul>
+    <li><a href="#problema" data-i18n="nav_problema">El Problema</a></li>
+    <li><a href="#solucion" data-i18n="nav_plataforma">Plataforma</a></li>
+    <li><a href="#metodologia" data-i18n="nav_metodologia">Metodología</a></li>
+    <li><a href="#seguridad" data-i18n="nav_seguridad">Seguridad</a></li>
+    <li><a href="#indices" data-i18n="nav_indices">Índices</a></li>
+    <li><a href="#verticales" data-i18n="nav_verticales">Verticales</a></li>
+    <li><a href="#inevitable" data-i18n="nav_inevitabilidad">Inevitabilidad</a></li>
+    <li><a href="#pricing" data-i18n="nav_niveles">Niveles</a></li>
+    <li><a href="#roadmap" data-i18n="nav_roadmap">Roadmap</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switch"><button type="button" data-lang-btn="es" class="active">ES</button><span>/</span><button type="button" data-lang-btn="en">EN</button></div>
+    <a class="cta-btn" href="#contacto" data-i18n="nav_cta">Unirse a lista de espera</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <img class="hero-art" src="scr/wizor-energy-audit-heroe.webp" alt="Parque eólico offshore auditado por Wizor al amanecer" data-i18n-alt="hero_art_alt">
+  <div class="hero-scrim"></div>
+  <canvas id="stars"></canvas>
+  <div class="hero-content">
+    <div class="badge" data-i18n="hero_badge">Software de auditoría energética para Gobiernos</div>
+    <h1 data-i18n="hero_h1">El Estándar <span>Incorruptible</span><br>de la Energía Global</h1>
+    <p class="sub" data-i18n="hero_sub">Wizor Energy es el software de auditoría independiente que verifica el estado real, el riesgo y el rendimiento de cualquier activo energético — eólico, nuclear, hidrógeno, solar orbital — con modelos físicos verificables, no con promesas del fabricante. Cero conflicto de interés: el veredicto que cualquier gobierno puede firmar.</p>
+    <div class="trust-strip" data-i18n="hero_trust">Metodología pública · Ningún fabricante es accionista de Wizor · Verificación de doble factor independiente</div>
+    <div class="ticker">
+      <div class="tick"><div class="num" data-t="300000">0</div><div class="lbl" data-i18n="tick_nodos">Nodos auditados</div></div>
+      <div class="tick"><div class="num" data-t="80">0</div><div class="lbl" data-i18n="tick_naciones">Naciones auditadas</div></div>
+      <div class="tick"><div class="num" data-t="8">0</div><div class="lbl" data-i18n="tick_verticales">Verticales energéticas</div></div>
+      <div class="tick"><div class="num" data-t="99">0</div><div class="lbl" data-i18n="tick_irdi">% Precisión IRDI (72h)</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="problema">
+  <div class="kicker" data-i18n="prob_kicker">El problema</div>
+  <h2 data-i18n="prob_h2">El monitoreo energético gubernamental<br>está estructuralmente roto</h2>
+  <p class="lead" data-i18n="prob_lead">Los Estados invierten billones en la transición energética con instrumentos de medición del siglo pasado.</p>
+  <div class="prob-grid">
+    <div class="prob"><div class="pnum">01</div><h3 data-i18n="prob1_h3">Sistemas retrospectivos</h3><p data-i18n="prob1_p">SCADA y centros de despacho muestran el estado eléctrico del presente. Ninguno calcula la degradación termodinámica del futuro ni su costo fiscal.</p></div>
+    <div class="prob"><div class="pnum">02</div><h3 data-i18n="prob2_h3">Juez y parte</h3><p data-i18n="prob2_p">Los gobiernos auditan sus activos con la telemetría propietaria de los mismos fabricantes y operadores que deberían ser auditados. Declaraciones juradas opacas.</p></div>
+    <div class="prob"><div class="pnum">03</div><h3 data-i18n="prob3_h3">Incertidumbre sin modelar</h3><p data-i18n="prob3_p">El desgaste de materiales en entornos extremos es estocástico. Las predicciones deterministas fallan; el riesgo financiero real queda sin cuantificar.</p></div>
+  </div>
+</section>
+
+<section id="solucion">
+  <div class="kicker" data-i18n="sol_kicker">La plataforma</div>
+  <h2 data-i18n="sol_h2">Un auditor algorítmico basado en<br>leyes físicas y estadística</h2>
+  <p class="lead" data-i18n="sol_lead">Motor híbrido físico-probabilístico: simulación estructural certificable, cuantificación de incertidumbre con garantías estadísticas, y redes neuronales informadas por la física (PINNs) donde no existe historial de datos.</p>
+  <div class="sol-wrap">
+    <div class="sol-points">
+      <div class="sp"><div class="ic"><svg class="icon-badge" width="22" height="22" viewBox="0 0 48 48"><use href="#icon-engine"/></svg></div><div><h4 data-i18n="sp1_h4">Física primero, estadística después</h4><p data-i18n="sp1_p">Modelos de elementos finitos de orden reducido y termodinámica verificable. Cada predicción es trazable a una ley física — defendible ante un regulador o un tribunal.</p></div></div>
+      <div class="sp"><div class="ic"><svg class="icon-badge" width="22" height="22" viewBox="0 0 48 48"><use href="#icon-index"/></svg></div><div><h4 data-i18n="sp2_h4">Resultados actuariales, no promesas</h4><p data-i18n="sp2_p">Probabilidades calibradas con intervalos de confianza: riesgo de falla, horas operativas restantes e impacto financiero esperado para la red.</p></div></div>
+      <div class="sp"><div class="ic"><svg class="icon-badge" width="22" height="22" viewBox="0 0 48 48"><use href="#icon-radar"/></svg></div><div><h4 data-i18n="sp3_h4">Doble factor de verificación</h4><p data-i18n="sp3_p">Telemetría OPC UA / IEC 61850 contrastada con teledetección satelital SAR e infrarroja independiente. Nadie puede maquillar sus datos.</p></div></div>
+      <div class="sp"><div class="ic"><svg class="icon-badge" width="22" height="22" viewBox="0 0 48 48"><use href="#icon-lock"/></svg></div><div><h4 data-i18n="sp4_h4">Zona desmilitarizada de datos</h4><p data-i18n="sp4_p">Arquitectura DMZ conforme IEC 62443: el operador protege su IP industrial, el Estado recibe su semáforo de riesgo. Solo lectura, custodia criptográfica completa.</p></div></div>
+    </div>
+    <div class="cert-visual">
+      <img src="scr/wizor-energy-audit-sello.webp" alt="Certificado oficial de auditoría Wizor" data-i18n-alt="cert_img_alt">
+      <div class="cert-cap">
+        <h4 data-i18n="cert_h4">El certificado que un ministro puede firmar</h4>
+        <p data-i18n="cert_p">Sellado, trazable, con metodología pública — no una captura de pantalla de un dashboard.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipeline-wrap">
+    <svg viewBox="0 0 1200 190" width="100%" role="img" aria-label="Proceso Wizor en 4 pasos" data-i18n-aria="pipeline_aria" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0L10,5L0,10z" fill="#38e1ff"/>
+        </marker>
+        <radialGradient id="nodeGrad" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#16223f"/><stop offset="100%" stop-color="#0a1020"/>
+        </radialGradient>
+      </defs>
+      <line x1="150" y1="70" x2="352" y2="70" stroke="#38e1ff" stroke-width="2" class="flow" opacity=".7" marker-end="url(#arrow)"/>
+      <line x1="450" y1="70" x2="652" y2="70" stroke="#38e1ff" stroke-width="2" class="flow" opacity=".7" marker-end="url(#arrow)"/>
+      <line x1="750" y1="70" x2="952" y2="70" stroke="#38e1ff" stroke-width="2" class="flow" opacity=".7" marker-end="url(#arrow)"/>
+      <g>
+        <circle cx="100" cy="70" r="52" fill="url(#nodeGrad)" stroke="#38e1ff" stroke-width="1.4" opacity=".9"/>
+        <use href="#icon-scada" x="76" y="46" width="48" height="48" color="#38e1ff"/>
+        <text x="100" y="150" text-anchor="middle" fill="#e8edf7" font-size="14" font-weight="700" data-i18n="pn1_title">Activo físico</text>
+        <text x="100" y="170" text-anchor="middle" fill="#8b96ad" font-size="11.5" data-i18n="pn1_sub">Turbina, reactor, panel…</text>
+      </g>
+      <g>
+        <circle cx="400" cy="70" r="52" fill="url(#nodeGrad)" stroke="#38e1ff" stroke-width="1.4" opacity=".9"/>
+        <use href="#icon-network" x="376" y="46" width="48" height="48" color="#38e1ff"/>
+        <text x="400" y="150" text-anchor="middle" fill="#e8edf7" font-size="14" font-weight="700" data-i18n="pn2_title">12 capas de datos</text>
+        <text x="400" y="170" text-anchor="middle" fill="#8b96ad" font-size="11.5">OPC UA · SAR · CMMS</text>
+      </g>
+      <g>
+        <circle cx="700" cy="70" r="52" fill="url(#nodeGrad)" stroke="#7c6cff" stroke-width="1.4" opacity=".9"/>
+        <use href="#icon-engine" x="676" y="46" width="48" height="48" color="#7c6cff"/>
+        <text x="700" y="150" text-anchor="middle" fill="#e8edf7" font-size="14" font-weight="700" data-i18n="pn3_title">Motor físico-probabilístico</text>
+        <text x="700" y="170" text-anchor="middle" fill="#8b96ad" font-size="11.5" data-i18n="pn3_sub">FEA + incertidumbre calibrada</text>
+      </g>
+      <g>
+        <circle cx="1000" cy="70" r="52" fill="url(#nodeGrad)" stroke="#3dffa8" stroke-width="1.4" opacity=".9"/>
+        <use href="#icon-certificate" x="976" y="46" width="48" height="48" color="#3dffa8"/>
+        <text x="1000" y="150" text-anchor="middle" fill="#e8edf7" font-size="14" font-weight="700" data-i18n="pn4_title">Certificado auditable</text>
+        <text x="1000" y="170" text-anchor="middle" fill="#8b96ad" font-size="11.5" data-i18n="pn4_sub">Firmado · trazable · público</text>
+      </g>
+    </svg>
+    <div class="pipe-cap" data-i18n="pipe_cap">Un solo flujo trazable: del sensor en la planta al certificado que firma el Estado</div>
+  </div>
+</section>
+
+<section id="metodologia">
+  <div class="kicker" data-i18n="mepv_kicker">Propiedad Intelectual</div>
+  <h2 data-i18n="mepv_h2">Un método patentado, no una<br>caja negra de inteligencia artificial</h2>
+  <p class="lead" data-i18n="mepv_lead">Las PINNs y la simulación física generan señales; la Metodología de Evaluación Ponderada y Vinculada (MEPV) decide qué significan. Patentada en Estados Unidos, es la capa donde se fijan los pesos, los índices y las reglas sobre las que se construye cada resultado de Wizor — la razón por la que un número Wizor se puede explicar, no solo creer.</p>
+  <div class="moat-grid">
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-cmms"/></svg></div><h4 data-i18n="mepv1_h4">El diagnóstico nunca es de la IA</h4><p data-i18n="mepv1_p">La inferencia estadística y las redes neuronales generan señales. La MEPV decide qué peso tiene cada una y cómo se combinan en un resultado — el diagnóstico final siempre queda del lado del método, no del modelo.</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-certificate"/></svg></div><h4 data-i18n="mepv2_h4">Un estándar, no una opinión de modelo</h4><p data-i18n="mepv2_p">Los pesos e índices de la MEPV son explícitos, versionados y documentados. La misma base matemática se aplica igual a cada activo, en cada país, sin importar qué modelo de IA corra por debajo.</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-smartcontract"/></svg></div><h4 data-i18n="mepv3_h4">Trazabilidad sin fricción</h4><p data-i18n="mepv3_p">Porque el resultado se construye con reglas conocidas y no con inferencia opaca, cualquier regulador puede reconstruir cómo se llegó a un número. Es auditable por diseño, no por buena voluntad.</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-shield"/></svg></div><h4 data-i18n="mepv4_h4">Probada antes en salud, no en energía</h4><p data-i18n="mepv4_p">La MEPV no nació para auditar turbinas — nació evaluando riesgo humano y de salud en entornos laborales de alta exigencia. Energía es su segunda industria, no su hipótesis inicial.</p></div>
+  </div>
+  <p class="closing-line" data-i18n="mepv_closing">Patentada en Estados Unidos. Nadie puede copiar el estándar copiando el modelo de IA — tendría que copiar el método.</p>
+</section>
+
+<div class="img-band">
+  <img src="scr/wizor-energy-audit-inspeccion.webp" alt="Ingeniero inspeccionando una pala de turbina con overlay de datos físicos de Wizor" data-i18n-alt="band1_alt">
+  <div class="scrim"></div>
+  <div class="cap">
+    <div class="kicker" data-i18n="band1_kicker">En el terreno</div>
+    <h3 data-i18n="band1_h3">No reemplaza el criterio del ingeniero. Lo hace indiscutible.</h3>
+    <p data-i18n="band1_p">Cada lectura de campo se contrasta contra el motor físico-probabilístico en tiempo real — la experiencia humana, respaldada por un veredicto que ningún auditor externo puede objetar.</p>
+  </div>
+</div>
+
+<section id="seguridad">
+  <div class="kicker" data-i18n="sec_kicker">Seguridad y Gobernanza</div>
+  <h2 data-i18n="sec_h2">Seguridad que se puede auditar,<br>no una promesa de confianza</h2>
+  <p class="lead" data-i18n="sec_lead">El activo más sensible que audita Wizor no es la turbina — es el dato. La misma disciplina que exigimos a un reactor nuclear la aplicamos a la arquitectura que protege su información.</p>
+  <div class="moat-grid">
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-lock"/></svg></div><h4 data-i18n="sec1_h4">Soberanía y residencia de datos</h4><p data-i18n="sec1_p">Los datos de un activo nunca salen de la jurisdicción del Estado que lo audita. Despliegue on-premise o en nube soberana, a elección del gobierno.</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-shield"/></svg></div><h4 data-i18n="sec2_h4">Arquitectura de confianza cero</h4><p data-i18n="sec2_p">Acceso de solo lectura, cifrado de extremo a extremo (AES-256 en reposo, TLS 1.3 en tránsito) y segmentación DMZ conforme IEC 62443. Wizor no puede escribir ni modificar lo que audita.</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-certificate"/></svg></div><h4 data-i18n="sec3_h4">Trazabilidad total</h4><p data-i18n="sec3_p">Cada consulta, cada exportación y cada acceso queda en un libro de auditoría inmutable. El propio regulador puede auditar cómo Wizor audita.</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-cyber"/></svg></div><h4 data-i18n="sec4_h4">Gobernanza humana del acceso</h4><p data-i18n="sec4_p">El mismo motor de evaluación de riesgo humano que Wizor aplica a personal industrial en otras industrias certifica a quién se le otorga acceso a datos de infraestructura crítica.</p></div>
+  </div>
+  <p class="closing-line" data-i18n="sec_closing">Arquitectura alineada a ISO/IEC 27001, IEC 62443 y el NIST Cybersecurity Framework — certificación formal en curso.</p>
+</section>
+
+<section id="capas">
+  <div class="kicker" data-i18n="capas_kicker">Arquitectura de ingesta</div>
+  <h2 data-i18n="capas_h2">Doce capas de datos convergen en un solo motor</h2>
+  <p class="lead" data-i18n="capas_lead">Cada activo se observa desde todos los ángulos posibles — técnico, ambiental, financiero, geopolítico y a medida del cliente.</p>
+  <svg class="radar" viewBox="0 0 640 640" role="img" aria-label="Radar de las 12 capas de ingesta de datos de Wizor, convergiendo en el motor central" data-i18n-aria="radar_aria" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="radarCore" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#223458"/><stop offset="100%" stop-color="#0a1020"/></radialGradient>
+      <linearGradient id="radarSweep" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#38e1ff" stop-opacity=".22"/><stop offset="100%" stop-color="#38e1ff" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <circle cx="320" cy="320" r="258" fill="none" stroke="#1c2c4d" stroke-width="1"/>
+    <circle cx="320" cy="320" r="172" fill="none" stroke="#1c2c4d" stroke-width="1"/>
+    <circle cx="320" cy="320" r="86" fill="none" stroke="#1c2c4d" stroke-width="1"/>
+    <g class="radar-sweep"><path d="M320,320 L320,62 A258,258 0 0,1 458,150 Z" fill="url(#radarSweep)"/></g>
+    <circle cx="320" cy="320" r="60" fill="url(#radarCore)" stroke="#38e1ff" stroke-width="1.6"/>
+    <text x="320" y="315" text-anchor="middle" fill="#e8edf7" font-weight="800" font-size="14" font-family="'Space Grotesk',sans-serif" data-i18n="radar_motor">MOTOR</text>
+    <text x="320" y="331" text-anchor="middle" fill="#38e1ff" font-size="9.5" letter-spacing="1.5" font-family="'Inter',sans-serif">WIZOR</text>
+    
+      <circle cx="320" cy="62" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(306,48)"><use href="#icon-scada" width="28" height="28"/></g>
+      <text x="320" y="22" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer01">Telemetría base</text>
+      <text x="320" y="38" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa01">CAPA 01</text>
+      <circle cx="449" cy="97" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(435,83)"><use href="#icon-weather" width="28" height="28"/></g>
+      <text x="449" y="57" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer02">Clima y entorno</text>
+      <text x="449" y="73" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa02">CAPA 02</text>
+      <circle cx="543" cy="191" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(529,177)"><use href="#icon-oem" width="28" height="28"/></g>
+      <text x="543" y="151" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer03">Línea base OEM</text>
+      <text x="543" y="167" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa03">CAPA 03</text>
+      <circle cx="578" cy="320" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(564,306)"><use href="#icon-grid" width="28" height="28"/></g>
+      <text x="578" y="280" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer04">Dinámica de red</text>
+      <text x="578" y="296" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa04">CAPA 04</text>
+      <circle cx="543" cy="449" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(529,435)"><use href="#icon-terrain" width="28" height="28"/></g>
+      <text x="543" y="497" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer05">Entorno físico</text>
+      <text x="543" y="513" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa05">CAPA 05</text>
+      <circle cx="449" cy="543" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(435,529)"><use href="#icon-financial" width="28" height="28"/></g>
+      <text x="449" y="591" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer06">Datos financieros</text>
+      <text x="449" y="607" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa06">CAPA 06</text>
+      <circle cx="320" cy="578" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(306,564)"><use href="#icon-cmms" width="28" height="28"/></g>
+      <text x="320" y="626" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer07">Historial CMMS</text>
+      <text x="320" y="642" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa07">CAPA 07</text>
+      <circle cx="191" cy="543" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(177,529)"><use href="#icon-network" width="28" height="28"/></g>
+      <text x="191" y="591" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer08">Geopolítica</text>
+      <text x="191" y="607" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa08">CAPA 08</text>
+      <circle cx="97" cy="449" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(83,435)"><use href="#icon-cyber" width="28" height="28"/></g>
+      <text x="97" y="497" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer09">Ciberseguridad OT</text>
+      <text x="97" y="513" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa09">CAPA 09</text>
+      <circle cx="62" cy="320" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(48,306)"><use href="#icon-radar" width="28" height="28"/></g>
+      <text x="62" y="280" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer10">Teledetección</text>
+      <text x="62" y="296" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa10">CAPA 10</text>
+      <circle cx="97" cy="191" r="27" fill="#0d1426" stroke="#38e1ff" stroke-width="1.3"/>
+      <g color="#38e1ff" transform="translate(83,177)"><use href="#icon-smartcontract" width="28" height="28"/></g>
+      <text x="97" y="151" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer11">Smart contracts</text>
+      <text x="97" y="167" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa11">CAPA 11</text>
+      <circle cx="191" cy="97" r="27" fill="#0d1426" stroke="#7c6cff" stroke-width="1.3" stroke-dasharray="3 3"/>
+      <g color="#7c6cff" transform="translate(177,83)"><use href="#icon-index" width="28" height="28"/></g>
+      <text x="191" y="57" text-anchor="middle" fill="#e8edf7" font-size="12.5" font-family="'Inter',sans-serif" data-i18n="layer12">Parámetros personalizados</text>
+      <text x="191" y="73" text-anchor="middle" fill="#5b6b85" font-size="10" font-family="'JetBrains Mono',monospace" data-i18n="capa12">CAPA 12 · a medida</text>
+  </svg>
+</section>
+
+<div class="img-band">
+  <img src="scr/wizor-energy-audit-monitor.webp" alt="Sala de situación ministerial revisando los índices de Wizor en tiempo real" data-i18n-alt="band2_alt">
+  <div class="scrim"></div>
+  <div class="cap">
+    <div class="kicker" data-i18n="band2_kicker">El destino de los datos</div>
+    <h3 data-i18n="band2_h3">Doce capas de telemetría se convierten en cinco índices que un ministro lee en diez segundos.</h3>
+    <p data-i18n="band2_p">Sin dashboards que interpretar ni informes de consultoría que esperar — un semáforo de riesgo, actualizado en vivo.</p>
+  </div>
+</div>
+
+<section id="indices">
+  <div class="kicker" data-i18n="idx_kicker">Outputs de Estado</div>
+  <h2 data-i18n="idx_h2">Índices que un ministro entiende en 10 segundos</h2>
+  <p class="lead" data-i18n="idx_lead">La termodinámica compleja traducida a decisiones de Estado. Metodología pública, versionada y validada actuarialmente.</p>
+  <div class="idx-grid">
+    <div class="idx"><div class="tag">IRDI</div><div class="live ok">2.1%</div><h4 data-i18n="irdi_h4">Riesgo de Desconexión Inminente</h4><p data-i18n="irdi_p">Probabilidad de caída de planta en las próximas 72 horas.</p></div>
+    <div class="idx"><div class="tag">FREE</div><div class="live cy">98.4</div><h4 data-i18n="free_h4">Resiliencia a Eventos Extremos</h4><p data-i18n="free_p">Capacidad de sostener generación durante anomalías climáticas o espaciales.</p></div>
+    <div class="idx"><div class="tag">TDA</div><div class="live warn">1.31x</div><h4 data-i18n="tda_h4">Tasa de Desgaste Asimétrico</h4><p data-i18n="tda_p">Degradación real vs. curva contractual. Detecta cuándo el operador exprime el activo más allá de lo pactado, sacrificando su vida útil.</p></div>
+    <div class="idx"><div class="tag">DIN</div><div class="live cy">−4.2%</div><h4 data-i18n="din_h4">Desviación de Inyección Neta</h4><p data-i18n="din_p">Energía útil real entregada a la red. La base de la auditoría de subsidios.</p></div>
+    <div class="idx"><div class="tag">CCD</div><div class="live warn">0.78</div><h4 data-i18n="ccd_h4">Cobertura de Desmantelamiento</h4><p data-i18n="ccd_p">Fideicomiso disponible vs. costo predictivo de fin de vida del activo.</p></div>
+  </div>
+</section>
+
+<section id="verticales">
+  <div class="kicker" data-i18n="vert_kicker">Matriz global de diagnóstico</div>
+  <h2 data-i18n="vert_h2">Ocho verticales. Un solo estándar.</h2>
+  <p class="lead" data-i18n="vert_lead">De la represa centenaria al panel en órbita geoestacionaria: el mismo lenguaje auditable para toda fuente de generación presente y futura.</p>
+  <div class="vert-grid">
+    <div class="vert"><div class="vert-img"><img src="scr/wizor-energy-audit-eolica.webp" alt="Turbinas eólicas offshore auditadas por Wizor" data-i18n-alt="v1_alt" loading="lazy"><span class="status s-op" data-i18n="status_op1">Operativo</span></div><div class="vert-body"><div class="top"><span class="emoji icon-badge"><svg width="24" height="24" viewBox="0 0 48 48"><use href="#icon-wind"/></svg></span></div><h4 data-i18n="v1_h4">Eólica Offshore</h4>
+      <div class="metrics"><div class="m"><div class="k" data-i18n="v1_k1">LCOE+S</div><div class="v">$110/MWh</div></div><div class="m"><div class="k" data-i18n="v1_k2">Vuln. suministro</div><div class="v warn">65%</div></div></div>
+      <p class="par" data-i18n="v1_par">Vibración de tren de potencia · integridad de cable submarino · fatiga de palas · corrosión salina · T° rodamientos</p></div></div>
+    <div class="vert"><div class="vert-img"><img src="scr/wizor-energy-audit-hidrogeno.webp" alt="Planta de electrólisis de hidrógeno verde auditada por Wizor" data-i18n-alt="v2_alt" loading="lazy"><span class="status s-op" data-i18n="status_op2">Operativo</span></div><div class="vert-body"><div class="top"><span class="emoji icon-badge"><svg width="24" height="24" viewBox="0 0 48 48"><use href="#icon-hydrogen"/></svg></span></div><h4 data-i18n="v2_h4">Hidrógeno Verde</h4>
+      <div class="metrics"><div class="m"><div class="k" data-i18n="v2_k1">LCOH</div><div class="v">$1.80/kg*</div></div><div class="m"><div class="k" data-i18n="v2_k2">Eficiencia DIN</div><div class="v cy">68%</div></div></div>
+      <p class="par" data-i18n="v2_par">Presión PEM · pureza de gas · T° electrolizador · micro-fugas H₂ · calidad de agua</p></div></div>
+    <div class="vert"><div class="vert-img"><img src="scr/wizor-energy-audit-reactor.webp" alt="Sala de control de un reactor SMR auditado por Wizor" data-i18n-alt="v3_alt" loading="lazy"><span class="status s-op" data-i18n="status_op3">Operativo</span></div><div class="vert-body"><div class="top"><span class="emoji icon-badge"><svg width="24" height="24" viewBox="0 0 48 48"><use href="#icon-fission"/></svg></span></div><h4 data-i18n="v3_h4">Fisión SMR</h4>
+      <div class="metrics"><div class="m"><div class="k" data-i18n="v3_k1">FREE</div><div class="v ok">99.9</div></div><div class="m"><div class="k" data-i18n="v3_k2">LCOE+S</div><div class="v">$95/MWh</div></div></div>
+      <p class="par" data-i18n="v3_par">T° de núcleo · presión de contención · flujo neutrónico · integridad de válvulas · barras de control</p></div></div>
+    <div class="vert"><div class="vert-img"><img src="scr/wizor-energy-audit-solar.webp" alt="Planta solar fotovoltaica auditada por Wizor" data-i18n-alt="v4_alt" loading="lazy"><span class="status s-op" data-i18n="status_op4">Operativo</span></div><div class="vert-body"><div class="top"><span class="emoji icon-badge"><svg width="24" height="24" viewBox="0 0 48 48"><use href="#icon-solar"/></svg></span></div><h4 data-i18n="v4_h4">Solar Fotovoltaica</h4>
+      <div class="metrics"><div class="m"><div class="k" data-i18n="v4_k1">LCOE+S</div><div class="v">$80–100/MWh</div></div><div class="m"><div class="k" data-i18n="v4_k2">Desvío DIN</div><div class="v warn">5–15%</div></div></div>
+      <p class="par" data-i18n="v4_par">T° de módulo · eficiencia de inversor · soiling · micro-grietas · voltaje de string</p></div></div>
+    <div class="vert"><div class="vert-img"><img src="scr/wizor-energy-audit-hidro.webp" alt="Presa hidroeléctrica auditada por Wizor" data-i18n-alt="v5_alt" loading="lazy"><span class="status s-op" data-i18n="status_op5">Operativo</span></div><div class="vert-body"><div class="top"><span class="emoji icon-badge"><svg width="24" height="24" viewBox="0 0 48 48"><use href="#icon-hydro"/></svg></span></div><h4 data-i18n="v5_h4">Hidroeléctrica</h4>
+      <div class="metrics"><div class="m"><div class="k" data-i18n="v5_k1">LCOE</div><div class="v">$35–45/MWh</div></div><div class="m"><div class="k" data-i18n="v5_k2">Riesgo sequía</div><div class="v crit" data-i18n="v5_v_alto">Alto</div></div></div>
+      <p class="par" data-i18n="v5_par">Nivel de embalse · presión de turbina · vibración de eje · fisuras de represa · integridad de válvulas</p></div></div>
+    <div class="vert"><div class="vert-img"><img src="scr/wizor-energy-audit-gas.webp" alt="Planta de gas natural con captura de carbono auditada por Wizor" data-i18n-alt="v6_alt" loading="lazy"><span class="status s-op" data-i18n="status_op6">Operativo</span></div><div class="vert-body"><div class="top"><span class="emoji icon-badge"><svg width="24" height="24" viewBox="0 0 48 48"><use href="#icon-gas"/></svg></span></div><h4 data-i18n="v6_h4">Gas Natural + CCUS</h4>
+      <div class="metrics"><div class="m"><div class="k" data-i18n="v6_k1">LCOE</div><div class="v">$90/MWh</div></div><div class="m"><div class="k" data-i18n="v6_k2">Riesgo CCUS</div><div class="v warn">18%</div></div></div>
+      <p class="par" data-i18n="v6_par">T° de entrada · recuperador de calor · presión de captura · pureza de aminas · eje de vapor</p></div></div>
+    <div class="vert"><div class="vert-img"><img src="scr/wizor-energy-audit-fusion.webp" alt="Núcleo de un reactor de fusión auditado por Wizor" data-i18n-alt="v7_alt" loading="lazy"><span class="status s-dep" data-i18n="status_dep1">Despliegue 2035+</span></div><div class="vert-body"><div class="top"><span class="emoji icon-badge"><svg width="24" height="24" viewBox="0 0 48 48"><use href="#icon-fusion"/></svg></span></div><h4 data-i18n="v7_h4">Fusión Nuclear</h4>
+      <div class="metrics"><div class="m"><div class="k" data-i18n="v7_k1">LCOE proy.</div><div class="v">$40–50/MWh</div></div><div class="m"><div class="k" data-i18n="v7_k2">Estabilidad plasma</div><div class="v cy">45 min</div></div></div>
+      <p class="par" data-i18n="v7_par">Estabilidad de plasma · T° magnética · integridad de primera pared · flujo de tritio · criogenia</p></div></div>
+    <div class="vert"><div class="vert-img"><img src="scr/wizor-energy-audit-satelite.webp" alt="Satélite de energía solar espacial auditado por Wizor" data-i18n-alt="v8_alt" loading="lazy"><span class="status s-dep" data-i18n="status_dep2">Despliegue 2035+</span></div><div class="vert-body"><div class="top"><span class="emoji icon-badge"><svg width="24" height="24" viewBox="0 0 48 48"><use href="#icon-sbsp"/></svg></span></div><h4 data-i18n="v8_h4">Solar Espacial (SBSP)</h4>
+      <div class="metrics"><div class="m"><div class="k" data-i18n="v8_k1">LCOE proy.</div><div class="v">$95–100/MWh</div></div><div class="m"><div class="k" data-i18n="v8_k2">Pérdida atm.</div><div class="v warn">12%</div></div></div>
+      <p class="par" data-i18n="v8_par">Degradación por radiación · actitud orbital · eficiencia de microondas · T° de paneles · calibración de rectena</p></div></div>
+  </div>
+
+</section>
+
+<section id="moats">
+  <div class="kicker" data-i18n="moats_kicker">Por qué Wizor</div>
+  <h2 data-i18n="moats_h2">Neutralidad y profundidad física:<br>un cuadrante sin competencia</h2>
+  <div class="moat-photo-wrap">
+    <img class="moat-photo" src="scr/wizor-energy-audit-mundo.webp" alt="La Tierra al amanecer con la red algorítmica global de Wizor superpuesta" data-i18n-alt="moat_photo_alt">
+    <p class="moat-photo-cap" data-i18n="moat_photo_cap">Cada activo auditado — en cualquier continente — hace al modelo global más preciso. El segundo jugador en entrar a este mercado nunca alcanza al primero.</p>
+  </div>
+  <div class="moat-grid">
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-shield"/></svg></div><h4 data-i18n="moat1_h4">Estándar regulatorio</h4><p data-i18n="moat1_p">El Estándar Wizor se inscribe en la legislación de licitaciones públicas. Metodología abierta, validada en comités internacionales (IEC · IEEE · CIGRE).</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-financial"/></svg></div><h4 data-i18n="moat2_h4">Árbitro financiero</h4><p data-i18n="moat2_p">Aseguradoras y mercados de capital usan los índices Wizor para pólizas paramétricas y emisión de Bonos Verdes. El activo que Wizor no audita, no se asegura.</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-engine"/></svg></div><h4 data-i18n="moat3_h4">Hardware agnóstico</h4><p data-i18n="moat3_p">Sin lealtades: auditamos GE, Siemens, Vestas o CNNC con la misma vara. Los OEMs no pueden auditar a su propia competencia. Nosotros sí.</p></div>
+    <div class="moat"><div class="ic"><svg class="icon-badge" width="26" height="26" viewBox="0 0 48 48"><use href="#icon-network"/></svg></div><h4 data-i18n="moat4_h4">Efecto de red algorítmico</h4><p data-i18n="moat4_p">Cada activo auditado — cada marca, clima y órbita — madura el modelo global. Con 300,000 nodos, la ventaja predictiva es inalcanzable.</p></div>
+  </div>
+</section>
+
+<section id="inevitable">
+  <div class="kicker" data-i18n="inev_kicker">La tesis</div>
+  <h2 data-i18n="inev_h2">Esto no es una apuesta a que el mercado cambie.<br>Es una descripción de hacia dónde ya va.</h2>
+  <p class="lead" data-i18n="inev_lead">Tres fuerzas independientes convergen hacia el mismo punto — y ninguna depende de que a un gobierno "le guste" Wizor.</p>
+  <div class="force-grid">
+    <div class="force">
+      <svg class="icon-badge" width="30" height="30" viewBox="0 0 48 48"><use href="#icon-shield"/></svg>
+      <h4 data-i18n="force1_h4">La ley del trinquete regulatorio</h4>
+      <p data-i18n="force1_p">Un estándar de auditoría, una vez inscrito en un pliego de licitación, no se retira — se copia en el siguiente. Cada Estado que adopta a Wizor allana el camino al próximo.</p>
+    </div>
+    <div class="force">
+      <svg class="icon-badge" width="30" height="30" viewBox="0 0 48 48"><use href="#icon-certificate"/></svg>
+      <h4 data-i18n="force2_h4">El capital exige un árbitro neutral</h4>
+      <p data-i18n="force2_p">Sin verificación de un tercero no hay bono verde emitible ni póliza paramétrica suscribible sobre un activo energético. El mercado financiero termina exigiendo lo que Wizor ofrece hoy por convicción.</p>
+    </div>
+    <div class="force">
+      <svg class="icon-badge" width="30" height="30" viewBox="0 0 48 48"><use href="#icon-network"/></svg>
+      <h4 data-i18n="force3_h4">El efecto de red algorítmico compone</h4>
+      <p data-i18n="force3_p">Cada activo auditado — cada marca, cada clima, cada falla — hace al modelo global más preciso. El segundo jugador en entrar a este mercado nunca alcanza al primero.</p>
+    </div>
+  </div>
+  <p class="closing-line" data-i18n="closing_line">La pregunta que debe quedar en la mente de cualquier lector no es si va a existir un estándar así. Es quién lo va a controlar.</p>
+</section>
+
+<section id="pricing">
+  <div class="kicker" data-i18n="price_kicker">Niveles jurisdiccionales</div>
+  <h2 data-i18n="price_h2">El Estándar, por niveles de jurisdicción</h2>
+  <p class="lead" data-i18n="price_lead">Suscripción anual segmentada por nivel jurisdiccional y capacidad auditada. Add-ons: estrés climático, simulaciones What-If (Digital Twin) y escenarios cibernéticos.</p>
+  <div class="price-grid">
+    <div class="price"><h4 data-i18n="p1_h4">Wizor Municipal</h4><div class="amt">$50K<small data-i18n="usd_year1"> USD/año</small></div>
+      <ul><li data-i18n="p1_li1">Smart City: distribución y generación local</li><li data-i18n="p1_li2">Índices IRDI y DIN</li><li data-i18n="p1_li3">Certificados mensuales firmados</li><li data-i18n="p1_li4">Hasta 50 nodos auditados</li></ul></div>
+    <div class="price feat"><div class="pop" data-i18n="p2_pop">Punto de inflexión</div><h4 data-i18n="p2_h4">Wizor Provincial</h4><div class="amt">$500K<small data-i18n="usd_year2"> USD/año</small></div>
+      <ul><li data-i18n="p2_li1">Grid Master: red de transmisión regional</li><li data-i18n="p2_li2">Matriz completa de índices</li><li data-i18n="p2_li3">Auditoría de subsidios en tiempo real</li><li data-i18n="p2_li4">Integración con aseguradoras paramétricas</li><li data-i18n="p2_li5">Hasta 1,000 nodos auditados</li></ul></div>
+    <div class="price"><h4 data-i18n="p3_h4">Wizor Nacional</h4><div class="amt">$3M<small data-i18n="usd_year3"> USD/año</small></div>
+      <ul><li data-i18n="p3_li1">National Sec: matriz energética completa</li><li data-i18n="p3_li2">Teledetección de doble factor SAR</li><li data-i18n="p3_li3">Ciberinteligencia OT y geopolítica</li><li data-i18n="p3_li4">Smart contracts regulatorios</li><li data-i18n="p3_li5">Sala de situación ministerial 24/7</li></ul></div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="kicker">Roadmap 2026 — 2046</div>
+  <h2 data-i18n="road_h2">De un piloto de Estado al sistema<br>operativo de la energía mundial</h2>
+  <div class="road">
+    <div class="rd"><div class="yr" data-i18n="rd1_yr">2026 — 2027 · GÉNESIS</div><h4 data-i18n="rd1_h4">Cuña offshore + Cliente Cero</h4><p data-i18n="rd1_p">Motor físico-probabilístico validado en eólica offshore. Primer piloto con regulador visionario, backtesting publicado, whitepaper de metodología de índices.</p></div>
+    <div class="rd"><div class="yr" data-i18n="rd2_yr">2028 — 2029 · TRACCIÓN</div><h4 data-i18n="rd2_h4">Validación actuarial y expansión vertical</h4><p data-i18n="rd2_p">Alianza con reaseguradoras: los índices Wizor respaldan pólizas paramétricas. Solar, hidro y gas CCUS entran a la matriz. Primeros contratos Tier 2.</p></div>
+    <div class="rd"><div class="yr" data-i18n="rd3_yr">2030 · HITO ODS</div><h4 data-i18n="rd3_h4">El punto de inflexión regulatorio</h4><p data-i18n="rd3_p">Mandatos globales de descarbonización y resiliencia exigen auditoría independiente. El Estándar Wizor entra en pliegos de licitación de 15 países.</p></div>
+    <div class="rd"><div class="yr" data-i18n="rd4_yr">2032 — 2035 · ESTÁNDAR</div><h4 data-i18n="rd4_h4">Nuclear de nueva generación</h4><p data-i18n="rd4_p">Los primeros SMR comerciales nacen auditados por Wizor desde el día uno — donde no hay historial de fallas, nuestras PINNs son la única referencia.</p></div>
+    <div class="rd"><div class="yr" data-i18n="rd5_yr">2036 — 2040 · ÓRBITA</div><h4 data-i18n="rd5_h4">Fusión y solar espacial</h4><p data-i18n="rd5_p">Auditoría de plantas de fusión comerciales y las primeras constelaciones SBSP. El clima espacial y la dinámica orbital entran a la matriz estándar.</p></div>
+    <div class="rd"><div class="yr" data-i18n="rd6_yr">2046 · DOMINIO</div><h4 data-i18n="rd6_h4">El epicentro contable de la energía terrestre y orbital</h4><p data-i18n="rd6_p">300,000 nodos, 80 naciones, toda transacción de infraestructura energética —seguro, bono, subsidio, desmantelamiento— referenciada a un índice Wizor.</p></div>
+  </div>
+</section>
+
+<div class="final" id="contacto">
+  <svg class="cta-art" viewBox="0 0 800 800" role="img" aria-label="Tierra con anillo orbital de auditoría satelital" data-i18n-aria="cta_art_aria" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="earthGrad" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#3dffa8"/><stop offset="45%" stop-color="#1a6e8c"/><stop offset="100%" stop-color="#050810"/>
+      </radialGradient>
+      <clipPath id="earthClip"><circle cx="400" cy="400" r="200"/></clipPath>
+    </defs>
+    <circle cx="400" cy="400" r="200" fill="url(#earthGrad)" opacity=".85"/>
+    <g clip-path="url(#earthClip)" opacity=".35" fill="#0a1020">
+      <ellipse cx="330" cy="330" rx="90" ry="50"/>
+      <ellipse cx="460" cy="420" rx="70" ry="40"/>
+      <ellipse cx="380" cy="480" rx="50" ry="30"/>
+    </g>
+    <ellipse cx="400" cy="400" rx="290" ry="90" fill="none" stroke="#38e1ff" stroke-width="1.2" opacity=".4" transform="rotate(-18 400 400)"/>
+    <g transform="rotate(-18 400 400)">
+      <circle cx="690" cy="400" r="5" fill="#38e1ff">
+        <animateTransform attributeName="transform" type="rotate" from="0 400 400" to="360 400 400" dur="46s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </svg>
+  <div class="inner">
+    <div class="kicker" data-i18n="final_kicker">La invitación</div>
+    <h2 data-i18n="final_h2">Su matriz energética ya se está degradando.<br>La pregunta es si usted lo sabe antes que nadie.</h2>
+    <p class="lead" style="margin:0 auto 36px" data-i18n="final_lead">Agende una demostración ejecutiva con datos reales de su red.</p>
+    <a class="btn-primary" href="mailto:mmendez@wizor.io" data-i18n="final_cta">Contactar al equipo fundador</a>
+  </div>
+</div>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:14px">
+    <img class="footer-logo" src="scr/logo-wizor-onDark.png" alt="Wizor Energy">
+    <span data-i18n="footer_tag">© 2026 Wizor · <span style="color:var(--cyan)">"El estándar que nadie puede comprar."</span></span>
+  </div>
+  <div data-i18n="footer_disclaimer">Documento interno de visión · No constituye oferta comercial · Métricas ilustrativas del estado objetivo</div>
+</footer>
+
+<script>
+// Starfield
+const cv=document.getElementById('stars'),cx=cv.getContext('2d');
+function rs(){cv.width=cv.offsetWidth;cv.height=cv.offsetHeight}rs();addEventListener('resize',rs);
+const stars=Array.from({length:140},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.4+.3,s:Math.random()*.4+.1,p:Math.random()*6.28}));
+(function anim(t){cx.clearRect(0,0,cv.width,cv.height);
+ stars.forEach(st=>{const a=.3+.7*Math.abs(Math.sin(t/1400*st.s+st.p));
+  cx.beginPath();cx.arc(st.x*cv.width,st.y*cv.height,st.r,0,6.28);
+  cx.fillStyle=`rgba(160,200,255,${a})`;cx.fill()});
+ requestAnimationFrame(anim)})(0);
+
+// Animated counters
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;
+ const el=e.target,t=+el.dataset.t,d=1600,st=performance.now();
+ (function up(n){const p=Math.min((n-st)/d,1),v=Math.floor(t*(1-Math.pow(1-p,3)));
+  el.textContent=v.toLocaleString('en-US');if(p<1)requestAnimationFrame(up)})(st);
+ io.unobserve(el)}),{threshold:.5});
+document.querySelectorAll('[data-t]').forEach(el=>io.observe(el));
+</script>
+
+<script>
+const I18N = {"page_title": {"es": "Wizor — El Estándar Incorruptible de Auditoría Energética", "en": "Wizor — The Incorruptible Standard for Energy Auditing"}, "nav_problema": {"es": "El Problema", "en": "The Problem"}, "nav_plataforma": {"es": "Plataforma", "en": "Platform"}, "nav_indices": {"es": "Índices", "en": "Indices"}, "nav_verticales": {"es": "Verticales", "en": "Verticals"}, "nav_inevitabilidad": {"es": "Inevitabilidad", "en": "Inevitability"}, "nav_niveles": {"es": "Niveles", "en": "Tiers"}, "nav_roadmap": {"es": "Roadmap", "en": "Roadmap"}, "nav_cta": {"es": "Unirse a lista de espera", "en": "Join the waitlist"}, "hero_art_alt": {"es": "Parque eólico offshore auditado por Wizor al amanecer", "en": "Offshore wind farm audited by Wizor at dawn"}, "hero_badge": {"es": "Software de auditoría energética para Gobiernos", "en": "Energy audit software for Governments"}, "hero_h1": {"es": "El Estándar <span>Incorruptible</span><br>de la Energía Global", "en": "The <span>Incorruptible</span> Standard<br>for Global Energy"}, "hero_sub": {"es": "Wizor es el software de auditoría independiente que verifica el estado real, el riesgo y el rendimiento de cualquier activo energético — eólico, nuclear, hidrógeno, solar orbital — con modelos físicos verificables, no con promesas del fabricante. Cero conflicto de interés: el veredicto que cualquier gobierno puede firmar.", "en": "Wizor is the independent audit software that verifies the real condition, risk, and performance of any energy asset — wind, nuclear, hydrogen, orbital solar — using verifiable physical models, not manufacturer promises. Zero conflict of interest: the verdict any government can sign."}, "hero_trust": {"es": "Metodología pública · Ningún fabricante es accionista de Wizor · Verificación de doble factor independiente", "en": "Public methodology · No manufacturer holds equity in Wizor · Independent two-factor verification"}, "tick_nodos": {"es": "Nodos auditados", "en": "Nodes audited"}, "tick_naciones": {"es": "Naciones auditadas", "en": "Nations audited"}, "tick_verticales": {"es": "Verticales energéticas", "en": "Energy verticals"}, "tick_irdi": {"es": "% Precisión IRDI (72h)", "en": "% IRDI accuracy (72h)"}, "prob_kicker": {"es": "El problema", "en": "The problem"}, "prob_h2": {"es": "El monitoreo energético gubernamental<br>está estructuralmente roto", "en": "Government energy monitoring<br>is structurally broken"}, "prob_lead": {"es": "Los Estados invierten billones en la transición energética con instrumentos de medición del siglo pasado.", "en": "States are investing billions in the energy transition using last century's measurement instruments."}, "prob1_h3": {"es": "Sistemas retrospectivos", "en": "Rear-view systems"}, "prob1_p": {"es": "SCADA y centros de despacho muestran el estado eléctrico del presente. Ninguno calcula la degradación termodinámica del futuro ni su costo fiscal.", "en": "SCADA systems and dispatch centers show the electrical state of the present. None calculate the thermodynamic degradation to come, or its fiscal cost."}, "prob2_h3": {"es": "Juez y parte", "en": "Judge and defendant"}, "prob2_p": {"es": "Los gobiernos auditan sus activos con la telemetría propietaria de los mismos fabricantes y operadores que deberían ser auditados. Declaraciones juradas opacas.", "en": "Governments audit their assets using proprietary telemetry from the very manufacturers and operators that should be under audit. Opaque sworn declarations."}, "prob3_h3": {"es": "Incertidumbre sin modelar", "en": "Unmodeled uncertainty"}, "prob3_p": {"es": "El desgaste de materiales en entornos extremos es estocástico. Las predicciones deterministas fallan; el riesgo financiero real queda sin cuantificar.", "en": "Material wear in extreme environments is stochastic. Deterministic predictions fail, and the real financial risk goes unquantified."}, "sol_kicker": {"es": "La plataforma", "en": "The platform"}, "sol_h2": {"es": "Un auditor algorítmico basado en<br>leyes físicas y estadística", "en": "An algorithmic auditor built on<br>physical law and statistics"}, "sol_lead": {"es": "Motor híbrido físico-probabilístico: simulación estructural certificable, cuantificación de incertidumbre con garantías estadísticas, y redes neuronales informadas por la física (PINNs) donde no existe historial de datos.", "en": "Hybrid physical-probabilistic engine: certifiable structural simulation, uncertainty quantification with statistical guarantees, and physics-informed neural networks (PINNs) where no data history exists."}, "sp1_h4": {"es": "Física primero, estadística después", "en": "Physics first, statistics second"}, "sp1_p": {"es": "Modelos de elementos finitos de orden reducido y termodinámica verificable. Cada predicción es trazable a una ley física — defendible ante un regulador o un tribunal.", "en": "Reduced-order finite element models and verifiable thermodynamics. Every prediction traces back to a physical law — defensible before a regulator or a court."}, "sp2_h4": {"es": "Resultados actuariales, no promesas", "en": "Actuarial results, not promises"}, "sp2_p": {"es": "Probabilidades calibradas con intervalos de confianza: riesgo de falla, horas operativas restantes e impacto financiero esperado para la red.", "en": "Calibrated probabilities with confidence intervals: failure risk, remaining operating hours, and expected financial impact to the grid."}, "sp3_h4": {"es": "Doble factor de verificación", "en": "Two-factor verification"}, "sp3_p": {"es": "Telemetría OPC UA / IEC 61850 contrastada con teledetección satelital SAR e infrarroja independiente. Nadie puede maquillar sus datos.", "en": "OPC UA / IEC 61850 telemetry cross-checked against independent SAR and infrared satellite remote sensing. No one can dress up their data."}, "sp4_h4": {"es": "Zona desmilitarizada de datos", "en": "Data demilitarized zone"}, "sp4_p": {"es": "Arquitectura DMZ conforme IEC 62443: el operador protege su IP industrial, el Estado recibe su semáforo de riesgo. Solo lectura, custodia criptográfica completa.", "en": "DMZ architecture compliant with IEC 62443: the operator protects its industrial IP, the State gets its risk dashboard. Read-only, full cryptographic custody."}, "cert_img_alt": {"es": "Certificado oficial de auditoría Wizor", "en": "Official Wizor audit certificate"}, "cert_h4": {"es": "El certificado que un ministro puede firmar", "en": "The certificate a minister can sign"}, "cert_p": {"es": "Sellado, trazable, con metodología pública — no una captura de pantalla de un dashboard.", "en": "Sealed, traceable, with public methodology — not a screenshot of a dashboard."}, "pipeline_aria": {"es": "Proceso Wizor en 4 pasos", "en": "Wizor process in 4 steps"}, "pn1_title": {"es": "Activo físico", "en": "Physical asset"}, "pn1_sub": {"es": "Turbina, reactor, panel…", "en": "Turbine, reactor, panel…"}, "pn2_title": {"es": "12 capas de datos", "en": "12 data layers"}, "pn3_title": {"es": "Motor físico-probabilístico", "en": "Physical-probabilistic engine"}, "pn3_sub": {"es": "FEA + incertidumbre calibrada", "en": "FEA + calibrated uncertainty"}, "pn4_title": {"es": "Certificado auditable", "en": "Auditable certificate"}, "pn4_sub": {"es": "Firmado · trazable · público", "en": "Signed · traceable · public"}, "pipe_cap": {"es": "Un solo flujo trazable: del sensor en la planta al certificado que firma el Estado", "en": "One traceable flow: from the sensor on the plant floor to the certificate the State signs"}, "band1_alt": {"es": "Ingeniero inspeccionando una pala de turbina con overlay de datos físicos de Wizor", "en": "Engineer inspecting a turbine blade with a Wizor physical-data overlay"}, "band1_kicker": {"es": "En el terreno", "en": "In the field"}, "band1_h3": {"es": "No reemplaza el criterio del ingeniero. Lo hace indiscutible.", "en": "It doesn't replace the engineer's judgment. It makes it indisputable."}, "band1_p": {"es": "Cada lectura de campo se contrasta contra el motor físico-probabilístico en tiempo real — la experiencia humana, respaldada por un veredicto que ningún auditor externo puede objetar.", "en": "Every field reading is checked in real time against the physical-probabilistic engine — human expertise, backed by a verdict no outside auditor can dispute."}, "capas_kicker": {"es": "Arquitectura de ingesta", "en": "Ingestion architecture"}, "capas_h2": {"es": "Doce capas de datos convergen en un solo motor", "en": "Twelve data layers converge into a single engine"}, "capas_lead": {"es": "Cada activo se observa desde todos los ángulos posibles — técnico, ambiental, financiero, geopolítico y a medida del cliente.", "en": "Every asset is observed from every possible angle — technical, environmental, financial, geopolitical, and custom to the client."}, "radar_aria": {"es": "Radar de las 12 capas de ingesta de datos de Wizor, convergiendo en el motor central", "en": "Radar of Wizor's 12 data ingestion layers converging on the central engine"}, "radar_motor": {"es": "MOTOR", "en": "ENGINE"}, "layer01": {"es": "Telemetría base", "en": "Base telemetry"}, "layer02": {"es": "Clima y entorno", "en": "Weather & environment"}, "layer03": {"es": "Línea base OEM", "en": "OEM baseline"}, "layer04": {"es": "Dinámica de red", "en": "Grid dynamics"}, "layer05": {"es": "Entorno físico", "en": "Physical environment"}, "layer06": {"es": "Datos financieros", "en": "Financial data"}, "layer07": {"es": "Historial CMMS", "en": "CMMS history"}, "layer08": {"es": "Geopolítica", "en": "Geopolitics"}, "layer09": {"es": "Ciberseguridad OT", "en": "OT cybersecurity"}, "layer10": {"es": "Teledetección", "en": "Remote sensing"}, "layer11": {"es": "Smart contracts", "en": "Smart contracts"}, "layer12": {"es": "Parámetros personalizados", "en": "Custom parameters"}, "capa01": {"es": "CAPA 01", "en": "LAYER 01"}, "capa02": {"es": "CAPA 02", "en": "LAYER 02"}, "capa03": {"es": "CAPA 03", "en": "LAYER 03"}, "capa04": {"es": "CAPA 04", "en": "LAYER 04"}, "capa05": {"es": "CAPA 05", "en": "LAYER 05"}, "capa06": {"es": "CAPA 06", "en": "LAYER 06"}, "capa07": {"es": "CAPA 07", "en": "LAYER 07"}, "capa08": {"es": "CAPA 08", "en": "LAYER 08"}, "capa09": {"es": "CAPA 09", "en": "LAYER 09"}, "capa10": {"es": "CAPA 10", "en": "LAYER 10"}, "capa11": {"es": "CAPA 11", "en": "LAYER 11"}, "capa12": {"es": "CAPA 12 · a medida", "en": "LAYER 12 · custom"}, "band2_alt": {"es": "Sala de situación ministerial revisando los índices de Wizor en tiempo real", "en": "Ministerial situation room reviewing Wizor's indices in real time"}, "band2_kicker": {"es": "El destino de los datos", "en": "Where the data ends up"}, "band2_h3": {"es": "Doce capas de telemetría se convierten en cinco índices que un ministro lee en diez segundos.", "en": "Twelve layers of telemetry become five indices a minister can read in ten seconds."}, "band2_p": {"es": "Sin dashboards que interpretar ni informes de consultoría que esperar — un semáforo de riesgo, actualizado en vivo.", "en": "No dashboards to interpret, no consulting reports to wait for — a live, continuously updated risk indicator."}, "idx_kicker": {"es": "Outputs de Estado", "en": "State outputs"}, "idx_h2": {"es": "Índices que un ministro entiende en 10 segundos", "en": "Indices a minister understands in 10 seconds"}, "idx_lead": {"es": "La termodinámica compleja traducida a decisiones de Estado. Metodología pública, versionada y validada actuarialmente.", "en": "Complex thermodynamics translated into State decisions. Public methodology, versioned and actuarially validated."}, "irdi_h4": {"es": "Riesgo de Desconexión Inminente", "en": "Imminent Disconnection Risk"}, "irdi_p": {"es": "Probabilidad de caída de planta en las próximas 72 horas.", "en": "Probability of plant failure in the next 72 hours."}, "free_h4": {"es": "Resiliencia a Eventos Extremos", "en": "Extreme Event Resilience"}, "free_p": {"es": "Capacidad de sostener generación durante anomalías climáticas o espaciales.", "en": "Ability to sustain generation through climate or space-weather anomalies."}, "tda_h4": {"es": "Tasa de Desgaste Asimétrico", "en": "Asymmetric Wear Rate"}, "tda_p": {"es": "Degradación real vs. curva contractual. Detecta cuándo el operador exprime el activo más allá de lo pactado, sacrificando su vida útil.", "en": "Real degradation vs. contractual curve. Flags when an operator pushes an asset beyond agreed terms, sacrificing its useful life."}, "din_h4": {"es": "Desviación de Inyección Neta", "en": "Net Injection Deviation"}, "din_p": {"es": "Energía útil real entregada a la red. La base de la auditoría de subsidios.", "en": "Real usable energy delivered to the grid. The basis for subsidy audits."}, "ccd_h4": {"es": "Cobertura de Desmantelamiento", "en": "Decommissioning Coverage"}, "ccd_p": {"es": "Fideicomiso disponible vs. costo predictivo de fin de vida del activo.", "en": "Available trust fund vs. predicted end-of-life cost of the asset."}, "vert_kicker": {"es": "Matriz global de diagnóstico", "en": "Global diagnostic matrix"}, "vert_h2": {"es": "Ocho verticales. Un solo estándar.", "en": "Eight verticals. One standard."}, "vert_lead": {"es": "De la represa centenaria al panel en órbita geoestacionaria: el mismo lenguaje auditable para toda fuente de generación presente y futura.", "en": "From the century-old dam to the panel in geostationary orbit: the same auditable language for every generation source, present and future."}, "v1_alt": {"es": "Turbinas eólicas offshore auditadas por Wizor", "en": "Offshore wind turbines audited by Wizor"}, "status_op1": {"es": "Operativo", "en": "Operational"}, "v1_h4": {"es": "Eólica Offshore", "en": "Offshore Wind"}, "v1_k1": {"es": "LCOE+S", "en": "LCOE+S"}, "v1_k2": {"es": "Vuln. suministro", "en": "Supply vuln."}, "v1_par": {"es": "Vibración de tren de potencia · integridad de cable submarino · fatiga de palas · corrosión salina · T° rodamientos", "en": "Drivetrain vibration · subsea cable integrity · blade fatigue · saline corrosion · bearing temp."}, "v2_alt": {"es": "Planta de electrólisis de hidrógeno verde auditada por Wizor", "en": "Green hydrogen electrolysis plant audited by Wizor"}, "status_op2": {"es": "Operativo", "en": "Operational"}, "v2_h4": {"es": "Hidrógeno Verde", "en": "Green Hydrogen"}, "v2_k1": {"es": "LCOH", "en": "LCOH"}, "v2_k2": {"es": "Eficiencia DIN", "en": "DIN efficiency"}, "v2_par": {"es": "Presión PEM · pureza de gas · T° electrolizador · micro-fugas H₂ · calidad de agua", "en": "PEM pressure · gas purity · electrolyzer temp. · H₂ micro-leaks · water quality"}, "v3_alt": {"es": "Sala de control de un reactor SMR auditado por Wizor", "en": "Control room of an SMR reactor audited by Wizor"}, "status_op3": {"es": "Operativo", "en": "Operational"}, "v3_h4": {"es": "Fisión SMR", "en": "SMR Fission"}, "v3_k1": {"es": "FREE", "en": "FREE"}, "v3_k2": {"es": "LCOE+S", "en": "LCOE+S"}, "v3_par": {"es": "T° de núcleo · presión de contención · flujo neutrónico · integridad de válvulas · barras de control", "en": "Core temp. · containment pressure · neutron flux · valve integrity · control rods"}, "v4_alt": {"es": "Planta solar fotovoltaica auditada por Wizor", "en": "Photovoltaic solar plant audited by Wizor"}, "status_op4": {"es": "Operativo", "en": "Operational"}, "v4_h4": {"es": "Solar Fotovoltaica", "en": "Solar PV"}, "v4_k1": {"es": "LCOE+S", "en": "LCOE+S"}, "v4_k2": {"es": "Desvío DIN", "en": "DIN deviation"}, "v4_par": {"es": "T° de módulo · eficiencia de inversor · soiling · micro-grietas · voltaje de string", "en": "Module temp. · inverter efficiency · soiling · micro-cracks · string voltage"}, "v5_alt": {"es": "Presa hidroeléctrica auditada por Wizor", "en": "Hydroelectric dam audited by Wizor"}, "status_op5": {"es": "Operativo", "en": "Operational"}, "v5_h4": {"es": "Hidroeléctrica", "en": "Hydroelectric"}, "v5_k1": {"es": "LCOE", "en": "LCOE"}, "v5_k2": {"es": "Riesgo sequía", "en": "Drought risk"}, "v5_v_alto": {"es": "Alto", "en": "High"}, "v5_par": {"es": "Nivel de embalse · presión de turbina · vibración de eje · fisuras de represa · integridad de válvulas", "en": "Reservoir level · turbine pressure · shaft vibration · dam cracking · valve integrity"}, "v6_alt": {"es": "Planta de gas natural con captura de carbono auditada por Wizor", "en": "Natural gas plant with carbon capture audited by Wizor"}, "status_op6": {"es": "Operativo", "en": "Operational"}, "v6_h4": {"es": "Gas Natural + CCUS", "en": "Natural Gas + CCUS"}, "v6_k1": {"es": "LCOE", "en": "LCOE"}, "v6_k2": {"es": "Riesgo CCUS", "en": "CCUS risk"}, "v6_par": {"es": "T° de entrada · recuperador de calor · presión de captura · pureza de aminas · eje de vapor", "en": "Inlet temp. · heat recovery · capture pressure · amine purity · steam shaft"}, "v7_alt": {"es": "Núcleo de un reactor de fusión auditado por Wizor", "en": "Core of a fusion reactor audited by Wizor"}, "status_dep1": {"es": "Despliegue 2035+", "en": "Deployment 2035+"}, "v7_h4": {"es": "Fusión Nuclear", "en": "Nuclear Fusion"}, "v7_k1": {"es": "LCOE proy.", "en": "Proj. LCOE"}, "v7_k2": {"es": "Estabilidad plasma", "en": "Plasma stability"}, "v7_par": {"es": "Estabilidad de plasma · T° magnética · integridad de primera pared · flujo de tritio · criogenia", "en": "Plasma stability · magnetic temp. · first-wall integrity · tritium flow · cryogenics"}, "v8_alt": {"es": "Satélite de energía solar espacial auditado por Wizor", "en": "Space-based solar power satellite audited by Wizor"}, "status_dep2": {"es": "Despliegue 2035+", "en": "Deployment 2035+"}, "v8_h4": {"es": "Solar Espacial (SBSP)", "en": "Space Solar (SBSP)"}, "v8_k1": {"es": "LCOE proy.", "en": "Proj. LCOE"}, "v8_k2": {"es": "Pérdida atm.", "en": "Atm. loss"}, "v8_par": {"es": "Degradación por radiación · actitud orbital · eficiencia de microondas · T° de paneles · calibración de rectena", "en": "Radiation degradation · orbital attitude · microwave efficiency · panel temp. · rectenna calibration"}, "moats_kicker": {"es": "Por qué Wizor", "en": "Why Wizor"}, "moats_h2": {"es": "Neutralidad y profundidad física:<br>un cuadrante sin competencia", "en": "Neutrality and physical depth:<br>a quadrant with no competition"}, "moat_photo_alt": {"es": "La Tierra al amanecer con la red algorítmica global de Wizor superpuesta", "en": "Earth at dawn with Wizor's global algorithmic network overlaid"}, "moat_photo_cap": {"es": "Cada activo auditado — en cualquier continente — hace al modelo global más preciso. El segundo jugador en entrar a este mercado nunca alcanza al primero.", "en": "Every audited asset — on any continent — makes the global model more precise. The second player to enter this market never catches the first."}, "moat1_h4": {"es": "Estándar regulatorio", "en": "Regulatory standard"}, "moat1_p": {"es": "El Estándar Wizor se inscribe en la legislación de licitaciones públicas. Metodología abierta, validada en comités internacionales (IEC · IEEE · CIGRE).", "en": "The Wizor Standard is written into public procurement legislation. Open methodology, validated by international committees (IEC · IEEE · CIGRE)."}, "moat2_h4": {"es": "Árbitro financiero", "en": "Financial arbiter"}, "moat2_p": {"es": "Aseguradoras y mercados de capital usan los índices Wizor para pólizas paramétricas y emisión de Bonos Verdes. El activo que Wizor no audita, no se asegura.", "en": "Insurers and capital markets use Wizor indices for parametric policies and Green Bond issuance. The asset Wizor doesn't audit doesn't get insured."}, "moat3_h4": {"es": "Hardware agnóstico", "en": "Hardware-agnostic"}, "moat3_p": {"es": "Sin lealtades: auditamos GE, Siemens, Vestas o CNNC con la misma vara. Los OEMs no pueden auditar a su propia competencia. Nosotros sí.", "en": "No allegiances: we audit GE, Siemens, Vestas, or CNNC by the same yardstick. OEMs can't audit their own competitors. We can."}, "moat4_h4": {"es": "Efecto de red algorítmico", "en": "Algorithmic network effect"}, "moat4_p": {"es": "Cada activo auditado — cada marca, clima y órbita — madura el modelo global. Con 300,000 nodos, la ventaja predictiva es inalcanzable.", "en": "Every audited asset — every brand, climate, and orbit — matures the global model. At 300,000 nodes, the predictive edge becomes unreachable."}, "inev_kicker": {"es": "La tesis", "en": "The thesis"}, "inev_h2": {"es": "Esto no es una apuesta a que el mercado cambie.<br>Es una descripción de hacia dónde ya va.", "en": "This isn't a bet that the market will change.<br>It's a description of where it's already headed."}, "inev_lead": {"es": "Tres fuerzas independientes convergen hacia el mismo punto — y ninguna depende de que a un gobierno \"le guste\" Wizor.", "en": "Three independent forces converge on the same point — and none of them depend on a government \"liking\" Wizor."}, "force1_h4": {"es": "La ley del trinquete regulatorio", "en": "The regulatory ratchet effect"}, "force1_p": {"es": "Un estándar de auditoría, una vez inscrito en un pliego de licitación, no se retira — se copia en el siguiente. Cada Estado que adopta a Wizor allana el camino al próximo.", "en": "An audit standard, once written into one tender, doesn't get removed — it gets copied into the next. Every State that adopts Wizor paves the way for the next one."}, "force2_h4": {"es": "El capital exige un árbitro neutral", "en": "Capital demands a neutral referee"}, "force2_p": {"es": "Sin verificación de un tercero no hay bono verde emitible ni póliza paramétrica suscribible sobre un activo energético. El mercado financiero termina exigiendo lo que Wizor ofrece hoy por convicción.", "en": "Without third-party verification, no green bond can be issued and no parametric policy can be underwritten on an energy asset. The financial market ends up demanding what Wizor already offers today, by conviction."}, "force3_h4": {"es": "El efecto de red algorítmico compone", "en": "The algorithmic network effect compounds"}, "force3_p": {"es": "Cada activo auditado — cada marca, cada clima, cada falla — hace al modelo global más preciso. El segundo jugador en entrar a este mercado nunca alcanza al primero.", "en": "Every audited asset — every brand, every climate, every failure — makes the global model more precise. The second player to enter this market never catches the first."}, "closing_line": {"es": "La pregunta que debe quedar en la mente de cualquier lector no es si va a existir un estándar así. Es quién lo va a controlar.", "en": "The question that should stay in any reader's mind isn't whether a standard like this will exist. It's who will control it."}, "price_kicker": {"es": "Niveles jurisdiccionales", "en": "Jurisdiction tiers"}, "price_h2": {"es": "El Estándar, por niveles de jurisdicción", "en": "The Standard, by jurisdiction tier"}, "price_lead": {"es": "Suscripción anual segmentada por nivel jurisdiccional y capacidad auditada. Add-ons: estrés climático, simulaciones What-If (Digital Twin) y escenarios cibernéticos.", "en": "Annual subscription segmented by jurisdiction level and audited capacity. Add-ons: climate stress testing, What-If simulations (Digital Twin), and cyber scenarios."}, "p1_h4": {"es": "Wizor Municipal", "en": "Wizor Municipal"}, "usd_year1": {"es": " USD/año", "en": " USD/year"}, "p1_li1": {"es": "Smart City: distribución y generación local", "en": "Smart City: local distribution and generation"}, "p1_li2": {"es": "Índices IRDI y DIN", "en": "IRDI and DIN indices"}, "p1_li3": {"es": "Certificados mensuales firmados", "en": "Signed monthly certificates"}, "p1_li4": {"es": "Hasta 50 nodos auditados", "en": "Up to 50 audited nodes"}, "p2_pop": {"es": "Punto de inflexión", "en": "Tipping point"}, "p2_h4": {"es": "Wizor Provincial", "en": "Wizor Provincial"}, "usd_year2": {"es": " USD/año", "en": " USD/year"}, "p2_li1": {"es": "Grid Master: red de transmisión regional", "en": "Grid Master: regional transmission network"}, "p2_li2": {"es": "Matriz completa de índices", "en": "Full index matrix"}, "p2_li3": {"es": "Auditoría de subsidios en tiempo real", "en": "Real-time subsidy auditing"}, "p2_li4": {"es": "Integración con aseguradoras paramétricas", "en": "Integration with parametric insurers"}, "p2_li5": {"es": "Hasta 1,000 nodos auditados", "en": "Up to 1,000 audited nodes"}, "p3_h4": {"es": "Wizor Nacional", "en": "Wizor National"}, "usd_year3": {"es": " USD/año", "en": " USD/year"}, "p3_li1": {"es": "National Sec: matriz energética completa", "en": "National Sec: full energy matrix"}, "p3_li2": {"es": "Teledetección de doble factor SAR", "en": "SAR two-factor remote sensing"}, "p3_li3": {"es": "Ciberinteligencia OT y geopolítica", "en": "OT and geopolitical cyber intelligence"}, "p3_li4": {"es": "Smart contracts regulatorios", "en": "Regulatory smart contracts"}, "p3_li5": {"es": "Sala de situación ministerial 24/7", "en": "24/7 ministerial situation room"}, "road_h2": {"es": "De un piloto de Estado al sistema<br>operativo de la energía mundial", "en": "From a State pilot to the operating<br>system for the world's energy"}, "rd1_yr": {"es": "2026 — 2027 · GÉNESIS", "en": "2026 — 2027 · GENESIS"}, "rd1_h4": {"es": "Cuña offshore + Cliente Cero", "en": "Offshore wedge + Client Zero"}, "rd1_p": {"es": "Motor físico-probabilístico validado en eólica offshore. Primer piloto con regulador visionario, backtesting publicado, whitepaper de metodología de índices.", "en": "Physical-probabilistic engine validated in offshore wind. First pilot with a visionary regulator, published backtesting, index-methodology whitepaper."}, "rd2_yr": {"es": "2028 — 2029 · TRACCIÓN", "en": "2028 — 2029 · TRACTION"}, "rd2_h4": {"es": "Validación actuarial y expansión vertical", "en": "Actuarial validation and vertical expansion"}, "rd2_p": {"es": "Alianza con reaseguradoras: los índices Wizor respaldan pólizas paramétricas. Solar, hidro y gas CCUS entran a la matriz. Primeros contratos Tier 2.", "en": "Partnership with reinsurers: Wizor indices back parametric policies. Solar, hydro, and gas CCUS enter the matrix. First Tier 2 contracts."}, "rd3_yr": {"es": "2030 · HITO ODS", "en": "2030 · SDG MILESTONE"}, "rd3_h4": {"es": "El punto de inflexión regulatorio", "en": "The regulatory tipping point"}, "rd3_p": {"es": "Mandatos globales de descarbonización y resiliencia exigen auditoría independiente. El Estándar Wizor entra en pliegos de licitación de 15 países.", "en": "Global decarbonization and resilience mandates demand independent auditing. The Wizor Standard enters public tenders in 15 countries."}, "rd4_yr": {"es": "2032 — 2035 · ESTÁNDAR", "en": "2032 — 2035 · STANDARD"}, "rd4_h4": {"es": "Nuclear de nueva generación", "en": "Next-generation nuclear"}, "rd4_p": {"es": "Los primeros SMR comerciales nacen auditados por Wizor desde el día uno — donde no hay historial de fallas, nuestras PINNs son la única referencia.", "en": "The first commercial SMRs are born audited by Wizor from day one — where no failure history exists, our PINNs are the only reference."}, "rd5_yr": {"es": "2036 — 2040 · ÓRBITA", "en": "2036 — 2040 · ORBIT"}, "rd5_h4": {"es": "Fusión y solar espacial", "en": "Fusion and space solar"}, "rd5_p": {"es": "Auditoría de plantas de fusión comerciales y las primeras constelaciones SBSP. El clima espacial y la dinámica orbital entran a la matriz estándar.", "en": "Auditing of commercial fusion plants and the first SBSP constellations. Space weather and orbital dynamics enter the standard matrix."}, "rd6_yr": {"es": "2046 · DOMINIO", "en": "2046 · DOMINANCE"}, "rd6_h4": {"es": "El epicentro contable de la energía terrestre y orbital", "en": "The accounting epicenter of terrestrial and orbital energy"}, "rd6_p": {"es": "300,000 nodos, 80 naciones, toda transacción de infraestructura energética —seguro, bono, subsidio, desmantelamiento— referenciada a un índice Wizor.", "en": "300,000 nodes, 80 nations, every energy-infrastructure transaction — insurance, bond, subsidy, decommissioning — referenced against a Wizor index."}, "cta_art_aria": {"es": "Tierra con anillo orbital de auditoría satelital", "en": "Earth with an orbital satellite-audit ring"}, "final_kicker": {"es": "La invitación", "en": "The invitation"}, "final_h2": {"es": "Su matriz energética ya se está degradando.<br>La pregunta es si usted lo sabe antes que nadie.", "en": "Your energy matrix is already degrading.<br>The question is whether you know it before anyone else."}, "final_lead": {"es": "Agende una demostración ejecutiva con datos reales de su red.", "en": "Schedule an executive demo with real data from your grid."}, "final_cta": {"es": "Contactar al equipo fundador", "en": "Contact the founding team"}, "footer_tag": {"es": "© 2026 Wizor · <span style=\"color:var(--cyan)\">\"El estándar que nadie puede comprar.\"</span>", "en": "© 2026 Wizor · <span style=\"color:var(--cyan)\">\"The standard no one can buy.\"</span>"}, "footer_disclaimer": {"es": "Documento interno de visión · No constituye oferta comercial · Métricas ilustrativas del estado objetivo", "en": "Internal vision document · Not a commercial offer · Illustrative metrics for the target state"}, "nav_seguridad": {"es": "Seguridad", "en": "Security"}, "sec_kicker": {"es": "Seguridad y Gobernanza", "en": "Security & Governance"}, "sec_h2": {"es": "Seguridad que se puede auditar,<br>no una promesa de confianza", "en": "Security you can audit,<br>not a promise of trust"}, "sec_lead": {"es": "El activo más sensible que audita Wizor no es la turbina — es el dato. La misma disciplina que exigimos a un reactor nuclear la aplicamos a la arquitectura que protege su información.", "en": "The most sensitive asset Wizor audits isn't the turbine — it's the data. We apply the same discipline we demand of a nuclear reactor to the architecture that protects your information."}, "sec1_h4": {"es": "Soberanía y residencia de datos", "en": "Data sovereignty and residency"}, "sec1_p": {"es": "Los datos de un activo nunca salen de la jurisdicción del Estado que lo audita. Despliegue on-premise o en nube soberana, a elección del gobierno.", "en": "An asset's data never leaves the jurisdiction of the State that audits it. On-premise or sovereign-cloud deployment, the government's choice."}, "sec2_h4": {"es": "Arquitectura de confianza cero", "en": "Zero-trust architecture"}, "sec2_p": {"es": "Acceso de solo lectura, cifrado de extremo a extremo (AES-256 en reposo, TLS 1.3 en tránsito) y segmentación DMZ conforme IEC 62443. Wizor no puede escribir ni modificar lo que audita.", "en": "Read-only access, end-to-end encryption (AES-256 at rest, TLS 1.3 in transit), and DMZ segmentation compliant with IEC 62443. Wizor cannot write to or modify what it audits."}, "sec3_h4": {"es": "Trazabilidad total", "en": "Full traceability"}, "sec3_p": {"es": "Cada consulta, cada exportación y cada acceso queda en un libro de auditoría inmutable. El propio regulador puede auditar cómo Wizor audita.", "en": "Every query, export, and access is recorded in an immutable audit log. The regulator itself can audit how Wizor audits."}, "sec4_h4": {"es": "Gobernanza humana del acceso", "en": "Human governance of access"}, "sec4_p": {"es": "El mismo motor de evaluación de riesgo humano que Wizor aplica a personal industrial en otras industrias certifica a quién se le otorga acceso a datos de infraestructura crítica.", "en": "The same human-risk evaluation engine Wizor applies to industrial personnel in other industries certifies who is granted access to critical-infrastructure data."}, "sec_closing": {"es": "Arquitectura alineada a ISO/IEC 27001, IEC 62443 y el NIST Cybersecurity Framework — certificación formal en curso.", "en": "Architecture aligned with ISO/IEC 27001, IEC 62443, and the NIST Cybersecurity Framework — formal certification in progress."}, "nav_metodologia": {"es": "Metodología", "en": "Methodology"}, "mepv_kicker": {"es": "Propiedad Intelectual", "en": "Intellectual Property"}, "mepv_h2": {"es": "Un método patentado, no una<br>caja negra de inteligencia artificial", "en": "A patented method, not an<br>artificial intelligence black box"}, "mepv_lead": {"es": "Las PINNs y la simulación física generan señales; la Metodología de Evaluación Ponderada y Vinculada (MEPV) decide qué significan. Patentada en Estados Unidos, es la capa donde se fijan los pesos, los índices y las reglas sobre las que se construye cada resultado de Wizor — la razón por la que un número Wizor se puede explicar, no solo creer.", "en": "PINNs and physical simulation generate signals; the Weighted and Linked Evaluation Methodology (MEPV) decides what they mean. Patented in the United States, it's the layer where the weights, indices, and rules behind every Wizor result are set — the reason a Wizor number can be explained, not just trusted."}, "mepv1_h4": {"es": "El diagnóstico nunca es de la IA", "en": "The diagnosis is never the AI's"}, "mepv1_p": {"es": "La inferencia estadística y las redes neuronales generan señales. La MEPV decide qué peso tiene cada una y cómo se combinan en un resultado — el diagnóstico final siempre queda del lado del método, no del modelo.", "en": "Statistical inference and neural networks generate signals. MEPV decides how much each one weighs and how they combine into a result — the final diagnosis always sits with the method, not the model."}, "mepv2_h4": {"es": "Un estándar, no una opinión de modelo", "en": "A standard, not a model's opinion"}, "mepv2_p": {"es": "Los pesos e índices de la MEPV son explícitos, versionados y documentados. La misma base matemática se aplica igual a cada activo, en cada país, sin importar qué modelo de IA corra por debajo.", "en": "MEPV's weights and indices are explicit, versioned, and documented. The same mathematical basis applies equally to every asset, in every country, regardless of which AI model runs underneath."}, "mepv3_h4": {"es": "Trazabilidad sin fricción", "en": "Traceability without friction"}, "mepv3_p": {"es": "Porque el resultado se construye con reglas conocidas y no con inferencia opaca, cualquier regulador puede reconstruir cómo se llegó a un número. Es auditable por diseño, no por buena voluntad.", "en": "Because the result is built from known rules rather than opaque inference, any regulator can reconstruct how a number was reached. It's auditable by design, not by goodwill."}, "mepv4_h4": {"es": "Probada antes en salud, no en energía", "en": "Proven in health first, not in energy"}, "mepv4_p": {"es": "La MEPV no nació para auditar turbinas — nació evaluando riesgo humano y de salud en entornos laborales de alta exigencia. Energía es su segunda industria, no su hipótesis inicial.", "en": "MEPV wasn't built to audit turbines — it was built evaluating human and health risk in demanding industrial workplaces. Energy is its second industry, not its first hypothesis."}, "mepv_closing": {"es": "Patentada en Estados Unidos. Nadie puede copiar el estándar copiando el modelo de IA — tendría que copiar el método.", "en": "Patented in the United States. No one can copy the standard by copying the AI model — they would have to copy the method."}};
+function setContent(el, val){
+  if (el instanceof SVGElement) el.textContent = val; else el.innerHTML = val;
+}
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const d = I18N[el.getAttribute('data-i18n')];
+    if(d) setContent(el, d[lang]);
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach(el=>{
+    const d = I18N[el.getAttribute('data-i18n-alt')];
+    if(d) el.alt = d[lang];
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el=>{
+    const d = I18N[el.getAttribute('data-i18n-aria')];
+    if(d) el.setAttribute('aria-label', d[lang]);
+  });
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-lang-btn]').forEach(b=>b.classList.toggle('active', b.getAttribute('data-lang-btn')===lang));
+  try{ localStorage.setItem('wizorLang', lang); }catch(e){}
+}
+document.querySelectorAll('[data-lang-btn]').forEach(b=>{
+  b.addEventListener('click', ()=>applyLang(b.getAttribute('data-lang-btn')));
+});
+let __wizorInitialLang = 'es';
+try{ const saved = localStorage.getItem('wizorLang'); if(saved==='en'||saved==='es') __wizorInitialLang = saved; }catch(e){}
+applyLang(__wizorInitialLang);
+</script>
+
+<script>
+// Scroll-reveal — hidden state already applied by CSS from first paint
+// (see :is(...) rule in <style>); JS only starts the entrance animation
+// on intersection, then hands control back once it finishes so per-card
+// :hover transitions are never fought by a lingering animation.
+(function(){
+  const sel = '#problema h2,#problema .lead,#problema .prob,#solucion h2,#solucion .lead,#solucion .sp,#solucion .cert-visual,#metodologia h2,#metodologia .lead,#metodologia .moat,#metodologia .closing-line,#seguridad h2,#seguridad .lead,#seguridad .moat,#seguridad .closing-line,#capas h2,#capas .lead,#capas .radar,#indices h2,#indices .lead,#indices .idx,#verticales h2,#verticales .lead,#verticales .vert,#moats h2,#moats .moat-photo-wrap,#moats .moat,#inevitable h2,#inevitable .lead,#inevitable .force,#inevitable .closing-line,#pricing h2,#pricing .lead,#pricing .price,#roadmap h2,#roadmap .rd,.img-band .cap,#contacto .inner';
+  const els = document.querySelectorAll(sel);
+  els.forEach(el=>el.addEventListener('animationend', ()=>el.classList.add('done'), {once:true}));
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver(entries=>entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    }), {threshold:.15, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(el=>io.observe(el));
+  } else {
+    els.forEach(el=>el.classList.add('done'));
+  }
+})();
+
+// Nav elevated state on scroll
+(function(){
+  const nav = document.querySelector('nav');
+  let ticking = false;
+  function update(){ nav.classList.toggle('scrolled', window.scrollY > 40); ticking = false; }
+  addEventListener('scroll', ()=>{ if(!ticking){ requestAnimationFrame(update); ticking = true; } }, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
